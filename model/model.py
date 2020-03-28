@@ -10,26 +10,31 @@ class NN(nn.Module):
         super().__init__()
 
         self.relu = nn.ReLU()
-        self.maxpool2d = nn.MaxPool2d(kernel_size=3, stride=2)
+        self.maxpool = nn.MaxPool2d(kernel_size=3)
         self.sigmoid = nn.Sigmoid()
 
         # Build model
-        self.input1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3)
-        self.input2 = nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1)
-        self.input3 = nn.Conv2d(128, 256, kernel_size=3, stride=1)
+        self.input1 = nn.Conv2d(3, 32, kernel_size=5)
+        self.input2 = nn.Conv2d(32, 64, kernel_size=5)
+        self.input3 = nn.Conv2d(64, 128, kernel_size=5)
 
-        self.hidden1 = nn.Linear(256, 256)
-        self.hidden2 = nn.Linear(256, 512)
+        self.hidden1 = nn.Linear(6272, 6272)
+        self.hidden2 = nn.Linear(6272, 500)
 
-        self.output = nn.Linear(512, 1)
+        self.output = nn.Linear(500, 1)
 
     def forward(self, x):
         # Forward pass
-        out = self.maxpool2d(self.relu(self.input1(x)))
-        out = self.maxpool2d(self.relu(self.input2(out)))
-        out = self.maxpool2d(self.relu(self.input3(out)))
+        x1, x2 = x[0], x[1]
 
-        out = out.view(out.size(0), -1)
+        input = [x1, x2]
+
+        for index, x in enumerate(input):
+            input[index] = self.maxpool(self.relu(self.input1(input[index])))
+            input[index] = self.maxpool(self.relu(self.input2(input[index])))
+            input[index] = self.maxpool(self.relu(self.input3(input[index])))
+
+        out = abs(input[0].view(input[0].size(0), -1) - input[1].view(input[1].size(0), -1))
 
         out = self.relu(self.hidden1(out))
         out = self.relu(self.hidden2(out))
