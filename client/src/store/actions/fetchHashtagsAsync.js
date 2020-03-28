@@ -1,13 +1,15 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
-export default function fetchHashtagsAsync(file) {
+export default function fetchHashtagsAsync(file, username) {
     return dispatch => {
         dispatch(fetchHashtagsStart())
 
-        axios.post('/rank_hashtags')
+        axios.post('/rank_hashtags', {
+            id: file.id,
+            username
+        })
         .then(res => {
-            console.log(res.data);
             dispatch(fetchHashtagsSuccess(file, res.data.hashtags))
         })
         .catch();
@@ -19,6 +21,10 @@ function fetchHashtagsStart() {
 }
 
 function fetchHashtagsSuccess(file, hashtags) {
-    return {type: actionTypes.FETCH_HASHTAGS_SUCCESS, file, hashtags}
+    return {
+        type: actionTypes.FETCH_HASHTAGS_SUCCESS, 
+        file, 
+        hashtags
+    }
 
 }

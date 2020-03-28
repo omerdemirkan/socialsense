@@ -28,7 +28,7 @@ export default function FilesSelection(props) {
 
                     axios.post('/add_image', {
                         id: props.fileCounter,
-                        image: reader.result
+                        image: reader.result.split(',')[1]
                     })
                     .then(res => {
                         console.log(res);
