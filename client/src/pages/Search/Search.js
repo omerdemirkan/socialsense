@@ -4,6 +4,7 @@ import classes from './Search.module.css';
 // Stages
 import UsernameInput from './Stages/UsernameInput/UsernameInput';
 import FilesSelection from './Stages/FilesSelection/FilesSelection';
+import ImageSelection from './Stages/ImageSelection/ImageSelection';
 
 // Redux
 import { connect } from 'react-redux';
@@ -11,13 +12,15 @@ import {
     updateUsername, 
     updateStage, 
     addFile,
-    deleteFileById
+    deleteFileById,
+    fetchRankingsAsync
 } from '../../store/actions/index';
 
 function Search(props) {
 
 
     let stage = null;
+
     switch(props.stage) {
         case 1:
             stage = <UsernameInput
@@ -32,7 +35,18 @@ function Search(props) {
             files={props.files}
             deleteFileById={props.onDeleteFileById}
             fileCounter={props.fileCounter}
+            nextStage={() => props.onUpdateStage(3)}
+            fetchRankings={props.onFetchRankings}
             />
+            break;
+
+        case 3:
+            stage = <ImageSelection
+            imagesAreRanked={props.imagesAreRanked}
+            loading={props.rankImagesLoading}
+            files={props.files}
+            />
+
     }
 
 
@@ -49,7 +63,9 @@ const mapStateToProps = state => {
         username: state.search.username,
         stage: state.search.stage,
         files: state.search.files,
-        fileCounter: state.search.fileCounter
+        fileCounter: state.search.fileCounter,
+        rankImagesLoading: state.search.rankImagesLoading,
+        imagesAreRanked: state.search.imagesAreRanked
     }
 }
 
@@ -58,7 +74,8 @@ const mapDispatchToProps = dispatch => {
         onUpdateUsername: text => dispatch(updateUsername(text)),
         onUpdateStage: stage => dispatch(updateStage(stage)),
         onAddFile: file => dispatch(addFile(file)),
-        onDeleteFileById: id => dispatch(deleteFileById(id))
+        onDeleteFileById: id => dispatch(deleteFileById(id)),
+        onFetchRankings: () => dispatch(fetchRankingsAsync())
     }
 }
 

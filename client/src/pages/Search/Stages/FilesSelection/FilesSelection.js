@@ -11,6 +11,11 @@ export default function FilesSelection(props) {
 
     const inputRef = useRef();
 
+    function rankButtonClickedHandler() {
+        props.fetchRankings();
+        props.nextStage()
+    }
+
     function fileUpdatedHandler(event) {
         try {
             const file = event.target.files[0];
@@ -84,7 +89,8 @@ export default function FilesSelection(props) {
             {props.files.length > 0 ?
                 <button
                 className='primary-button large fade-in-on-load'
-                style={{width: '50%'}}>Rank Images</button>
+                style={{width: '50%'}}
+                onClick={rankButtonClickedHandler}>Rank Images</button>
             : null}
 
             <ul className={classes.FileNameList}>

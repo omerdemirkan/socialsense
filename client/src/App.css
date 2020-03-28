@@ -43,6 +43,11 @@ button {
   margin: auto;
 }
 
+.loader-box {
+  display: flex;
+  justify-content: center;
+}
+
 .accented-text {
   color: var(--accent)
 }

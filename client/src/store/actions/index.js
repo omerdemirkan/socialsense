@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes'
 
-export {default as addImageAsync} from './fetchRankingsAsync';
+export {default as fetchRankingsAsync} from './fetchRankingsAsync';
 
 export function updateUsername(text) {
     return { type: actionTypes.UPDATE_USERNAME, text }

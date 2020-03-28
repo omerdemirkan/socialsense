@@ -1,8 +1,9 @@
 import axios from '../../axios';
 import * as actionTypes from './actionTypes';
 
-export default function fetchRankingsAsync(image, id) {
+export default function fetchRankingsAsync() {
     return dispatch => {
+        console.log('fetching rankings')
         dispatch(rankImagesStart())
 
         axios.get('/rank_images')

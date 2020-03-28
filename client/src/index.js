@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
 // Router
 import { BrowserRouter as Router } from 'react-router-dom'
 
@@ -21,10 +24,23 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
+
+// Material UI
+
+const materialTheme = createMuiTheme({
+    palette: {
+        primary: {
+            500: '#CC00FF'
+        }
+    }
+});
 const app = <Provider store={store}>
   <Router>
     <React.StrictMode>
-      <App />
+      <ThemeProvider theme={materialTheme}>
+        <App />
+      </ThemeProvider>
+      
     </React.StrictMode>
   </Router>
 </Provider>
