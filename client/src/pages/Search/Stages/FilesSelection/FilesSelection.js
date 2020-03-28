@@ -24,7 +24,7 @@ export default function FilesSelection(props) {
 
     console.log(props.files);
 
-    return <>
+    return <div className='fade-in-on-load'>
         <h2 className='page-header'>
             What Pictures Are You Considering?
         </h2>
@@ -40,7 +40,7 @@ export default function FilesSelection(props) {
 
             <button
             onClick={() => inputRef.current.click()}
-            >Choose File</button>
+            className='secondary-button large full-width'>Choose File</button>
 
             <ul className={classes.FileNameList}>
                 {props.files.map(file => {
@@ -55,5 +55,5 @@ export default function FilesSelection(props) {
             </ul>
         </div>
         
-    </>
+    </div>
 }

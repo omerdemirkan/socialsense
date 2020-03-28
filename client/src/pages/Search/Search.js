@@ -16,10 +16,6 @@ import {
 
 function Search(props) {
 
-    function deleteFileByName(fileName) {
-
-    }
-
 
     let stage = null;
     switch(props.stage) {
