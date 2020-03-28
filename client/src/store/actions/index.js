@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes'
 
 export {default as fetchRankingsAsync} from './fetchRankingsAsync';
+export {default as fetchHashtagsAsync} from './fetchHashtagsAsync';
 
 export function updateUsername(text) {
     return { type: actionTypes.UPDATE_USERNAME, text }

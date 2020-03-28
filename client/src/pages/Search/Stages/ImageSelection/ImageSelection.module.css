@@ -10,17 +10,17 @@
 }
 
 .ImagesList li {
-    height: 120px;
-    display: flex;
-    align-items: center;
+    /* height: 220px; */
+    /* display: flex;
+    align-items: center; */
 
-    margin: 5px 0;
+    margin: 60px 0;
     background-color: var(--background-alt);
-
-    padding: 0 20px;
+    border-radius: 3px;
+    padding: 5px;
 }
 
 .ImagesList img {
-    max-height: 100px;
-    max-width: 100px;
+    width: 100%;
+    border-radius: 3px;
 }
