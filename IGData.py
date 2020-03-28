@@ -17,6 +17,31 @@ pool_size = 8
 visible = False
 drivers = []
 
+top_100_tags = ['love', 'instagood', 'photooftheday', 'fashion', 'Beautiful', 'like4like', 'picoftheday', 'art', 'happy', 'photography', 'instagram', 'followme', 'style', 'follow', 'instadaily', 'travel', 'life', 'cute', 'fitness', 'nature', 'beauty', 'girl', 'fun', 'photo', 'amazing', 'likeforlike', 'instalike', 'Selfie', 'smile', 'me', 'lifestyle', 'model', 'follow4follow', 'music', 'friends', 'motivation', 'like', 'food', 'inspiration', 'Repost', 'summer', 'design', 'makeup', 'TBT', 'followforfollow', 'ootd', 'Family',
+                'l4l', 'cool', 'igers', 'TagsForLikes', 'hair', 'instamood', 'sun', 'vsco', 'fit', 'beach', 'photographer', 'gym', 'artist', 'girls', 'vscocam', 'autumn', 'pretty', 'luxury', 'instapic', 'black', 'sunset', 'funny', 'sky', 'blogger', 'hot', 'healthy', 'work', 'bestoftheday', 'workout', 'f4f', 'nofilter', 'london', 'goals', 'blackandwhite', 'blue', 'swag', 'health', 'party', 'night', 'landscape', 'nyc', 'happiness', 'pink', 'lol', 'foodporn', 'newyork', 'fitfam', 'awesome', 'fashionblogger', 'Halloween', 'Home', 'fall', 'paris']
+"""top 100 hashtags from https://www.all-hashtag.com/top-hashtags.php, used as a starting point
+for create_dataset
+"""
+
+
+def create_dataset(total=100, output_path='dataset.json'):
+    """Creates dataset of posts consisting of image links and the hashtags they use.
+
+    Writes output to JSON file. Used for training the image similarity model.
+
+    Parameters:
+    output_path -- path of JSON output file
+    total -- number of hashtags to collect data from
+    """
+    if len(drivers) == 0:
+        initialize_drivers()
+
+    dataset = _scrape(top_100_tags[:total], _scrape_post_tags, total)
+
+    dataset_formatted = _format_dataset(dataset)
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(dataset_formatted, f, ensure_ascii=False)
+
 
 def rank_tags(username, image, total=100, num_starting=30):
     """Rank hashtags for a user."""
@@ -179,6 +204,38 @@ def _scrape_post_engagement(post, driver):
     return [img_link, _get_engagement_diff(username, like_count, driver)]
 
 
+def _scrape_post_tags(post, driver):
+    driver.get(post)
+    try:
+        img = driver.find_element_by_css_selector('img.FFVAD')
+    # skip post if it's a video (carousels are not skipped, first image is obtained)
+    except NoSuchElementException:
+        return
+
+    img_link = img.get_attribute('srcset').split(' 640w')[0]
+
+    caption_div = driver.find_element_by_css_selector('div.C4VMK')
+    tags = [elem.text[1:] for elem in caption_div.find_elements_by_css_selector('a.xil3i')]
+
+    return [img_link, tags]
+
+
+def _format_dataset(dataset):
+    posts = []
+    for key, curr_posts in dataset.items():
+        # skipping hashtags that errored
+        if curr_posts is None:
+            continue
+        for post in curr_posts:
+            # skipping videos and individual posts that errored
+            if post is None:
+                continue
+            image, tags = post[0], post[1]
+            posts.append({'image': image, 'tags': tags})
+
+    return {'posts': posts}
+
+
 def _get_engagement_diff(username, post_like_count, driver, num_posts=10):
     user_json = _get_user(username, driver)
     follow_count = user_json['graphql']['user']['edge_followed_by']['count']
@@ -193,9 +250,3 @@ def _get_engagement_diff(username, post_like_count, driver, num_posts=10):
 
 def _similarity(image, img_link):
     return random()  # TODO: implement actual similarity with model
-
-
-if __name__ == "__main__":
-    login, password = os.environ['IGLOGIN'], os.environ['IGPASS']
-    print(rank_tags('thehalaalbites', None, 20, 10))
-    quit_drivers()
