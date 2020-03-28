@@ -1,0 +1,26 @@
+
+
+.ImagesList {
+    width: 90vw;
+    max-width: 500px;
+    margin: auto;
+
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.ImagesList li {
+    height: 120px;
+    display: flex;
+    align-items: center;
+
+    margin: 5px 0;
+    background-color: var(--background-alt);
+
+    padding: 0 20px;
+}
+
+.ImagesList img {
+    max-height: 100px;
+    max-width: 100px;
+}

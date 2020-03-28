@@ -12,10 +12,18 @@ export default function ImageSelection(props) {
     }
 
 
+    let delay = .2;
     return <div className={classes.ImageSelection}>
-        <ul className={classes.ImagesBox}>
+        <h2 className='page-header'>Boojie</h2>
+        <ul className={classes.ImagesList}>
             {props.files.map(file => {
-                return <img src={file.src}/>
+                delay += .05;
+                return <li 
+                className='fade-in-on-load' 
+                style={{animationDelay: delay + 's'}}>
+                    <img 
+                    src={file.src}/>
+                </li>
             })}
         </ul>
     </div>
