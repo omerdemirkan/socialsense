@@ -180,5 +180,5 @@ def _similarity(image, img_link):
 
 if __name__ == "__main__":
     login, password = os.environ['IGLOGIN'], os.environ['IGPASS']
-    print(rank_tags('thehalaalbites', None))
+    print(rank_tags('thehalaalbites', None, 20, 10))
     quit_drivers()
