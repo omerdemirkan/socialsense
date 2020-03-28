@@ -3,5 +3,31 @@
 }
 
 .FileNameList {
-
+    list-style: none;
+    padding-inline-start: 0;
+    text-align: center;
+    margin-top: 50px;
 }
+
+.FileNameList li {
+    position: relative;
+    margin: 10px 0;
+}
+
+.FileNameList li svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+.FileNameList li svg:hover {
+    opacity: 1;
+}
+
+/* a */
+
+
+

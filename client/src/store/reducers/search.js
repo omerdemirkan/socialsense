@@ -3,7 +3,9 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     username: '',
     stage: 1,
-    files: []
+    files: [],
+    searchImagesLoading: false,
+    fileCounter: 0
 }
 
 export default function searchReducer(state = initialState, action) {
@@ -21,12 +23,18 @@ export default function searchReducer(state = initialState, action) {
         case actionTypes.ADD_FILE:
             return {
                 ...state,
-                files: [...state.files, action.file]
+                files: [...state.files, action.file],
+                fileCounter: state.fileCounter + 1
             }
         case actionTypes.DELETE_FILE:
             return {
                 ...state,
                 files: state.files.filter(file => file.name !== action.fileName)
+            }
+        case actionTypes.SEARCH_IMAGES_START:
+            return {
+                ...state,
+                searchImagesLoading: true
             }
         default: 
             return state;

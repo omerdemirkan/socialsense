@@ -27,7 +27,8 @@ export default function UsernameInput(props) {
                 <Input type='text'
                 value={props.username}
                 onChange={e => props.updateUsername(e.target.value)}
-                className={classes.Input}/>
+                className={classes.Input}
+                autoFocus/>
                 <span className={classes.AtSymbol}>@</span>
             </div>
             

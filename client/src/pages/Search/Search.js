@@ -31,6 +31,7 @@ function Search(props) {
             addFile={props.onAddFile}
             files={props.files}
             deleteFileByName={props.onDeleteFileByName}
+            fileCounter={props.fileCounter}
             />
     }
 
@@ -47,7 +48,8 @@ const mapStateToProps = state => {
     return {
         username: state.search.username,
         stage: state.search.stage,
-        files: state.search.files
+        files: state.search.files,
+        fileCounter: state.search.fileCounter
     }
 }
 
