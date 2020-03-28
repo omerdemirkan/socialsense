@@ -1,6 +1,8 @@
 import json
+import re
 import os
 import traceback
+from random import random
 from collections import deque
 from multiprocessing import Pool
 from selenium.webdriver import Chrome
@@ -10,17 +12,40 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-login, password = None, None
-pool_size = 1
+login, password = os.environ['IGLOGIN'], os.environ['IGPASS']
+pool_size = 8
 visible = False
 drivers = [] # will initialize with initialize_drivers
 
-def scrape(starting_tags):
+def rank_tags(username, image, total=100, num_starting=15):
+    if login is None or password is None:
+        raise Exception('Missing login and password. Set values with set_login_password.')
+    if len(drivers) == 0:
+        initialize_drivers()
+
+    seen_tags = scrape(get_user_tags(username, num_starting), total)
+    
+    tag_scores = {}
+    for tag in seen_tags:
+        # skip failed tags
+        if seen_tags[tag] is None: continue
+        weighted_diffs = []
+        for post in seen_tags[tag]:
+            # skip failed posts
+            if post is None: continue
+            img_link, engagement_diff = post[0], post[1]
+            weighted_diffs.append(similarity(image, img_link) * engagement_diff)
+        tag_scores[tag] = sum(weighted_diffs) / len(weighted_diffs)
+
+    return tag_scores
+
+def scrape(starting_tags, total=4):
     tag_Q = deque(starting_tags)
     seen_tags = dict.fromkeys(tag_Q)
 
     while len(tag_Q) > 0:
         curr_tags = [tag_Q.popleft() for _ in range(min(pool_size, len(tag_Q)))]
+        print(f'Current hashtags: {curr_tags}')
         
         pool = Pool(len(curr_tags))
         args = [[curr_tags[i], i] for i in range(len(curr_tags))]
@@ -28,11 +53,23 @@ def scrape(starting_tags):
         pool.close()
         pool.join()
 
-        print(results)
+        # parsing results
+        for i in range(len(results)):
+            # if call to _scrape_tag failed, skip that result
+            if results[i] is None: continue
+            image_engagements, related_tags = results[i][0], results[i][1]
+
+            seen_tags[curr_tags[i]] = image_engagements
+            for tag in related_tags:
+                if len(seen_tags) >= total: break
+                if tag not in seen_tags:
+                    tag_Q.append(tag)
+                    seen_tags[tag] = None
+    
+    return seen_tags
 
 def scrape_tag(tag, driver_index, num_related=5):
     try:
-        print(f'scraping #{tag} with driver: {driver_index}')
         driver = drivers[driver_index]
         driver.get(f'https://www.instagram.com/explore/tags/{tag}')
 
@@ -87,6 +124,23 @@ def get_engagement_diff(username, post_like_count, driver, num_posts=10):
     return post_engagement_rate - avg_engagement_rate
     #TODO: perhaps skip videos...
 
+def get_user_tags(username, num_tags=15, driver_index=0):
+    driver = drivers[driver_index]
+    user_json = get_user(username, driver)
+    user_posts = user_json['graphql']['user']['edge_owner_to_timeline_media']['edges']
+
+    user_tags = set()
+    for post in user_posts:
+        caption = post['node']['edge_media_to_caption']['edges'][0]['node']['text']
+        
+        # lazily iterating through tags
+        for match in re.finditer(r'\#\w+', caption):
+            tag = match.group(0)[1:]
+            user_tags.add(tag)
+            if len(user_tags) == num_tags: return user_tags
+
+    return user_tags
+
 def get_user(username, driver):
     driver.get(f'https://www.instagram.com/{username}/?__a=1')
 
@@ -97,8 +151,8 @@ def get_user(username, driver):
         )
         inputs = driver.find_elements_by_css_selector('input')
         button = driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF')
-        inputs[0].send_keys(os.environ['IGLOGIN']) #TODO: add username, pass variables that user can set
-        inputs[1].send_keys(os.environ['IGPASS'])
+        inputs[0].send_keys(login) #TODO: add username, pass variables that user can set
+        inputs[1].send_keys(password)
         button.click()
         WebDriverWait(driver, 30).until(
             EC.title_is('Instagram')
@@ -107,6 +161,9 @@ def get_user(username, driver):
     
     body = driver.find_element_by_css_selector('body')
     return json.loads(body.text)
+
+def similarity(image, img_link):
+    return random() #TODO: implement actual similarity with model
 
 def initialize_drivers():
     global drivers
@@ -118,7 +175,6 @@ def initialize_drivers():
 def quit_drivers():
     [driver.quit() for driver in drivers]
 
-visible = True
 initialize_drivers()
-scrape(['anime', 'rice', 'cats', 'dogs'])
+print(rank_tags('thehalaalbites', None))
 quit_drivers()
