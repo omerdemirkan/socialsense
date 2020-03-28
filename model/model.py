@@ -3,6 +3,10 @@ import torch
 
 import torch.nn as nn
 
+from torch.utils.data import DataLoader, Dataset
+from torchvision import transforms
+from PIL import Image
+
 
 class NN(nn.Module):
     def __init__(self):
@@ -40,3 +44,14 @@ class NN(nn.Module):
         out = self.relu(self.hidden2(out))
 
         return self.sigmoid(self.output(out))
+
+
+class Data(Dataset):
+    def __init__(self, data):
+        # Initialize
+        self.transform = transforms.Compose([transforms.RandomHorizontalFlip(), transforms.RandomRotation(
+            30, expand=True), transforms.Resize((256, 256))])
+
+        self.data = data
+
+        self.len = len(self.data)
