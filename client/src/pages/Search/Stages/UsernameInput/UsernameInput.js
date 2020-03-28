@@ -15,20 +15,21 @@ const materialTheme = createMuiTheme({
 });
 
 export default function UsernameInput(props) {
-    return <ThemeProvider theme={materialTheme}>
+    return <div className='fade-in-on-load'>
+        <ThemeProvider theme={materialTheme}>
 
         <h2 className='page-header'>
             What Is Your Instagram Handle?
         </h2>
 
         <div className='form-box'>
-            <span className={classes.InputWrapper}>
+            <div className={classes.InputWrapper}>
                 <Input type='text'
                 value={props.username}
                 onChange={e => props.updateUsername(e.target.value)}
                 className={classes.Input}/>
                 <span className={classes.AtSymbol}>@</span>
-            </span>
+            </div>
             
             <button 
             className='primary-button large full-width' 
@@ -36,5 +37,7 @@ export default function UsernameInput(props) {
                 Submit
             </button>
         </div>
-    </ThemeProvider>
+        </ThemeProvider>
+    </div>
+    
 }

@@ -11,6 +11,7 @@
   padding-top: 100px;
   background-color: var(--background);
   color: var(--primary);
+  font-family: 'Nunito', sans-serif;
 }
 
 a {
@@ -21,6 +22,7 @@ a {
 button {
   outline: none;
   cursor: pointer;
+  font-family: 'Nunito', sans-serif;
 }
 
 .page-wrapper {
@@ -56,13 +58,13 @@ button.primary-button {
 }
 
 button.secondary-button {
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   background-color: var(--background);
   color: var(--accent);
   padding: 8px 20px;
   border-radius: 3px;
 
-  font-weight: 500;
+  font-weight: 600;
 
   transition: color 0.1s ease, border-color 0.1s ease;
 }
@@ -83,4 +85,20 @@ button.large {
 button.full-width {
   width: 100%;
   margin: 20px 0;
+}
+
+
+
+.fade-in-on-load {
+  opacity: 0;
+  animation: FadeIn 0.2s ease forwards;
+}
+
+@keyframes FadeIn {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1;
+  }
 }

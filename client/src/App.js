@@ -17,7 +17,7 @@ import Footer from './components/Footer/Footer';
 function App() {
   return <div className="App">
     <Navbar/>
-    <div className='page-wrapper'>
+    <div className='page-wrapper fade-in-on-load'>
 
       <Switch>
         <Route path='/about' component={About}/>

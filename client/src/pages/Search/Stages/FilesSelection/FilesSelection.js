@@ -24,7 +24,7 @@ export default function FilesSelection(props) {
 
     console.log(props.files);
 
-    return <>
+    return <div className='fade-in-on-load'>
         <h2 className='page-header'>
             What Pictures Are You Considering?
         </h2>
@@ -55,5 +55,5 @@ export default function FilesSelection(props) {
             </ul>
         </div>
         
-    </>
+    </div>
 }

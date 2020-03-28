@@ -4,6 +4,8 @@
 
 .InputWrapper {
     position: relative;
+    height: 45px;
+    overflow: auto;
 }
 
 .Input {
@@ -14,19 +16,22 @@
     padding: 0 40px;
 }
 
+.Input  {
+    font-family: 'Nunito' !important;
+}
+
 .Input:hover + span {
-    font-weight: 500;
-    
+    font-weight: 600;
 }
 
 .Input:focus-within + span {
     color: #CC00FF;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .AtSymbol {
     position: absolute;
-    top: -4px;
+    top: 6px;
     left: 10px;
     font-size: 1.4rem;
 
