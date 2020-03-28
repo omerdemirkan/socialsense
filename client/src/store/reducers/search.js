@@ -57,7 +57,8 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 files: newFiles,
-                imagesAreRanked: true
+                imagesAreRanked: true,
+                rankImagesLoading: false
             }
         default: 
             return state;
