@@ -7,11 +7,25 @@ import * as serviceWorker from './serviceWorker';
 // Router
 import { BrowserRouter as Router } from 'react-router-dom'
 
-const app = <Router>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-</Router>
+// Redux
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import searchReducer from './store/reducers/search';
+
+const rootReducer = combineReducers({
+  search: searchReducer
+});
+
+const store = createStore(rootReducer);
+
+const app = <Provider store={store}>
+  <Router>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Router>
+</Provider>
+
 
 ReactDOM.render(
   app,
