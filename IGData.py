@@ -67,6 +67,7 @@ def rank_tags(username, image, total=100, num_starting=30):
 
     return tag_scores
 
+
 def initialize_drivers():
     """Initialize selenium webdrivers. Calling beforehand can save time later."""
     global drivers
@@ -144,6 +145,7 @@ def _get_user(username, driver):
         button = driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF')
         inputs[0].send_keys(login)
         inputs[1].send_keys(password)
+
         button.click()
         WebDriverWait(driver, 30).until(
             EC.title_is('Instagram')
@@ -174,7 +176,7 @@ def _scrape_tag(tag, post_scraper, driver_index, num_related=5):
 
         image_data = [post_scraper(post, driver) for post in posts]
         return image_data, related_tags
-    except:
+    except Exception:
         print(f'Could not get top posts for {tag}')
         print(driver.page_source[:500])
         print(traceback.format_exc())
