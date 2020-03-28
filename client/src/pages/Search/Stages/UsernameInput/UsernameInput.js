@@ -3,20 +3,9 @@ import classes from './UsernameInput.module.css';
 
 // Material UI
 import Input from '@material-ui/core/Input';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const materialTheme = createMuiTheme({
-    palette: {
-        primary: {
-            500: '#CC00FF'
-        }
-    }
-});
 
 export default function UsernameInput(props) {
     return <div className='fade-in-on-load'>
-        <ThemeProvider theme={materialTheme}>
 
         <h2 className='page-header'>
             What Is Your Instagram Handle?
@@ -27,7 +16,8 @@ export default function UsernameInput(props) {
                 <Input type='text'
                 value={props.username}
                 onChange={e => props.updateUsername(e.target.value)}
-                className={classes.Input}/>
+                className={classes.Input}
+                autoFocus/>
                 <span className={classes.AtSymbol}>@</span>
             </div>
             
@@ -37,7 +27,6 @@ export default function UsernameInput(props) {
                 Submit
             </button>
         </div>
-        </ThemeProvider>
     </div>
     
 }

@@ -198,7 +198,7 @@ class Model():
 
 
 if __name__ == "__main__":
-    model = Model("color-1-128.model")
+    model = Model("color-10-128.model")
     # model.train()
     file1 = open("./test/meme1.png", "rb")
     im1 = Image.open(file1)

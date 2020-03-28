@@ -2,3 +2,6 @@ export const UPDATE_USERNAME = 'UPDATE_USERNAME';
 export const UPDATE_STAGE = 'UPDATE_STAGE';
 export const ADD_FILE = 'ADD_FILE';
 export const DELETE_FILE = 'DELETE_FILE';
+
+export const RANK_IMAGES_START = 'RANK_IMAGES_START';
+export const RANK_IMAGES_SUCCESS = 'RANK_IMAGES_SUCCESS';

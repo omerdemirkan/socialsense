@@ -43,6 +43,11 @@ button {
   margin: auto;
 }
 
+.loader-box {
+  display: flex;
+  justify-content: center;
+}
+
 .accented-text {
   color: var(--accent)
 }
@@ -78,7 +83,7 @@ button.secondary-button:hover {
 }
 
 button.large {
-  padding: 11px 40px;
+  height: 45px;
   font-size: 1.1rem;
 }
 
