@@ -6,4 +6,3 @@ env/
 chromedriver
 test.html
 test.js
-app_test.py
