@@ -7,12 +7,12 @@ export default function UsernameInput(props) {
         <h2 className='page-header'>
             What Is Your Instagram Handle?
         </h2>
-        
+
         <div className='form-box'>
             <input type='text'
             value={props.username}
             onChange={e => props.updateUsername(e.target.value)}/>
-            <button>Submit</button>
+            <button onClick={props.nextStage}>Submit</button>
         </div>
     </div>
 }
