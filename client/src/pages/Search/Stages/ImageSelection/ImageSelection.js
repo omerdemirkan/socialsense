@@ -22,7 +22,11 @@ export default function ImageSelection(props) {
                 className='fade-in-on-load' 
                 style={{animationDelay: delay + 's'}}>
                     <span>{file.name}</span>
-                    <span>Score: {file.score}</span>
+
+                    <span
+                    style={{float: 'right'}}
+                    >Score: {file.score}</span>
+
                     <img 
                     src={file.src}/>
 

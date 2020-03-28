@@ -40,7 +40,7 @@ export default function FilesSelection(props) {
                     props.addFile({
                         name: file.name,
                         id: props.fileCounter,
-                        base64: reader.result,
+                        base64: reader.result.split(',')[1],
                         src: e.target.result
                     });
 
