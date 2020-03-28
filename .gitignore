@@ -7,4 +7,7 @@ chromedriver
 test.html
 test.js
 test/
+Intrinsic-Image-Popularity/images/other
+
+
 mock-server
