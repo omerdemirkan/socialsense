@@ -20,7 +20,7 @@ export default function FilesSelection(props) {
                 reader.readAsDataURL(file);
                 reader.onload = function() {
 
-                    axios.post('https://localhost:5000/add_image', {
+                    axios.post('/add_image', {
                         id: props.fileCounter,
                         image: reader.result
                     })
@@ -33,18 +33,31 @@ export default function FilesSelection(props) {
 
                     props.addFile({
                         name: file.name,
+                        id: props.fileCounter,
                         base64: reader.result
                     });
 
                 }
 
             }
-            
-            
 
         } catch (err) {
             console.log(err)
         }
+    }
+
+    function fileDeletedHandler(file) {
+        axios.delete('/delete_image', {
+            id: props.fileCounter
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+
+        props.deleteFileById(file.id)
     }
 
     console.log(props.files);
@@ -79,7 +92,7 @@ export default function FilesSelection(props) {
                     return <li
                     key={file.name}>
                         {file.name}
-                        <ClearRoundedIcon onClick={() => props.deleteFileByName(file.name)}/>
+                        <ClearRoundedIcon onClick={() => fileDeletedHandler(file.name)}/>
                     </li>
                 })}
             </ul>

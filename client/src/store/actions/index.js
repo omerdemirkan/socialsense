@@ -14,6 +14,6 @@ export function addFile(file) {
     return {type: actionTypes.ADD_FILE, file}
 }
 
-export function deleteFileByName(fileName) {
-    return { type: actionTypes.DELETE_FILE, fileName }
+export function deleteFileById(id) {
+    return { type: actionTypes.DELETE_FILE, id }
 }

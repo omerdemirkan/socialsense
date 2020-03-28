@@ -11,7 +11,7 @@ import {
     updateUsername, 
     updateStage, 
     addFile,
-    deleteFileByName
+    deleteFileById
 } from '../../store/actions/index';
 
 function Search(props) {
@@ -30,8 +30,8 @@ function Search(props) {
             stage = <FilesSelection
             addFile={props.onAddFile}
             files={props.files}
-            deleteFileByName={props.onDeleteFileByName}
-            fileCounter={props.fileCounter}
+            deleteFileById={props.onDeleteFileById}
+            fileCounter={props.file}
             />
     }
 
@@ -58,7 +58,7 @@ const mapDispatchToProps = dispatch => {
         onUpdateUsername: text => dispatch(updateUsername(text)),
         onUpdateStage: stage => dispatch(updateStage(stage)),
         onAddFile: file => dispatch(addFile(file)),
-        onDeleteFileByName: fileName => dispatch(deleteFileByName(fileName))
+        onDeleteFileById: fileName => dispatch(deleteFileById(fileName))
     }
 }
 

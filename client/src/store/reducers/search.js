@@ -29,7 +29,7 @@ export default function searchReducer(state = initialState, action) {
         case actionTypes.DELETE_FILE:
             return {
                 ...state,
-                files: state.files.filter(file => file.name !== action.fileName)
+                files: state.files.filter(file => file.id !== action.id)
             }
         case actionTypes.SEARCH_IMAGES_START:
             return {
