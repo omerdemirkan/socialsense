@@ -31,7 +31,7 @@ function Search(props) {
             addFile={props.onAddFile}
             files={props.files}
             deleteFileById={props.onDeleteFileById}
-            fileCounter={props.file}
+            fileCounter={props.fileCounter}
             />
     }
 
@@ -58,7 +58,7 @@ const mapDispatchToProps = dispatch => {
         onUpdateUsername: text => dispatch(updateUsername(text)),
         onUpdateStage: stage => dispatch(updateStage(stage)),
         onAddFile: file => dispatch(addFile(file)),
-        onDeleteFileById: fileName => dispatch(deleteFileById(fileName))
+        onDeleteFileById: id => dispatch(deleteFileById(id))
     }
 }
 

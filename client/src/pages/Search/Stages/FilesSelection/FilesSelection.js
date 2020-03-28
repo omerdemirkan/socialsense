@@ -48,7 +48,7 @@ export default function FilesSelection(props) {
 
     function fileDeletedHandler(file) {
         axios.delete('/delete_image', {
-            id: props.fileCounter
+            id: file.id
         })
         .then(res => {
             console.log(res);
@@ -92,7 +92,7 @@ export default function FilesSelection(props) {
                     return <li
                     key={file.name}>
                         {file.name}
-                        <ClearRoundedIcon onClick={() => fileDeletedHandler(file.name)}/>
+                        <ClearRoundedIcon onClick={() => fileDeletedHandler(file)}/>
                     </li>
                 })}
             </ul>

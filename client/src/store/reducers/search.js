@@ -22,9 +22,12 @@ export default function searchReducer(state = initialState, action) {
                 stage: action.stage
             }
         case actionTypes.ADD_FILE:
+
+            const newFile = {...action.file}
+            newFile.id = state.fileCounter;
             return {
                 ...state,
-                files: [...state.files, action.file],
+                files: [...state.files, newFile],
                 fileCounter: state.fileCounter + 1
             }
         case actionTypes.DELETE_FILE:
