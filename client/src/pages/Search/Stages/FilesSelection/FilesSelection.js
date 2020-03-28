@@ -23,7 +23,8 @@ export default function FilesSelection(props) {
             if (file.size / Math.pow(2, 20) < 5) {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = function() {
+
+                reader.onload = function(e) {
 
                     axios.post('/add_image', {
                         id: props.fileCounter,
@@ -39,7 +40,8 @@ export default function FilesSelection(props) {
                     props.addFile({
                         name: file.name,
                         id: props.fileCounter,
-                        base64: reader.result
+                        base64: reader.result,
+                        src: e.target.result
                     });
 
                 }
@@ -52,7 +54,7 @@ export default function FilesSelection(props) {
     }
 
     function fileDeletedHandler(file) {
-        axios.delete('/delete_image', {
+        axios.post('/delete_image', {
             id: file.id
         })
         .then(res => {

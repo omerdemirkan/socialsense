@@ -4,12 +4,19 @@ import classes from './ImageSelection.module.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function ImageSelection(props) {
-    return <div>
-        {props.loading ?
-        <div className='loader-box'>
+
+    if (props.loading || !props.imagesAreRanked) {
+        return <div className='loader-box'>
             <CircularProgress />
         </div>
-        
-        : null}
+    }
+
+
+    return <div className={classes.ImageSelection}>
+        <ul className={classes.ImagesBox}>
+            {props.files.map(file => {
+                return <img src={file.src}/>
+            })}
+        </ul>
     </div>
 }

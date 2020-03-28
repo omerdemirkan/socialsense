@@ -41,21 +41,24 @@ export default function searchReducer(state = initialState, action) {
                 rankImagesLoading: true
             }
         case actionTypes.RANK_IMAGES_SUCCESS:
+            console.log(action.rankings);
             const rankingIds = action.rankings.map(ranking => ranking.id);
 
             const newFiles = [...state.files].map(fileObject => {
                 return {
                     ...fileObject,
-                    score: action.rankings[rankingIds.indexOf(fileObject.id)]
+                    score: action.rankings[rankingIds.indexOf(fileObject.id)].score
                 }
             })
 
             newFiles.sort((a, b) => b.score - a.score)
+            console.log(newFiles);
 
             return {
                 ...state,
                 files: newFiles,
-                imagesAreRanked: true
+                imagesAreRanked: true,
+                rankImagesLoading: false
             }
         default: 
             return state;

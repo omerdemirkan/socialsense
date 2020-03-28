@@ -8,7 +8,7 @@ export default function fetchRankingsAsync() {
 
         axios.get('/rank_images')
         .then(res => {
-            rankImagesSuccess(res.data)
+            dispatch(rankImagesSuccess(res.data.scores))
         })
         .catch();
     }
