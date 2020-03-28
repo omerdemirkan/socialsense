@@ -25,7 +25,7 @@ def predict(image, model):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--image_path', type=str, default='images/0.jpg')
+    parser.add_argument('--image_path', type=str, default='images/other/coordinate.png')
     config = parser.parse_args()
     image = Image.open(config.image_path)
     model = torchvision.models.resnet50()
