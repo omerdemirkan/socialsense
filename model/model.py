@@ -1,6 +1,9 @@
 # Instagram post similarity model - Jaivin Wylde
 import torch
 import json
+import random
+import io
+import requests
 
 import torch.nn as nn
 
@@ -51,15 +54,30 @@ class Data(Dataset):
     def __init__(self, data):
         # Initialize
         self.transform = transforms.Compose([transforms.RandomHorizontalFlip(), transforms.RandomRotation(
-            30, expand=True), transforms.Resize((256, 256))])
+            15, expand=True), transforms.Resize((256, 256))])
 
         self.data = data
+        self.keys = list(self.data.keys())
 
         self.len = len(self.data)
 
     def __getitem__(self, index):
         # Return sample
-        pass
+        key = self.keys[index]
+
+        x1 = random.choice(self.data[key])
+        x1 = requests.get(x1).content
+        x1 = Image.open(io.BytesIO(x1))
+        x1 = self.transform(x1)
+        x1.show()
+
+        x2 = random.choice(self.data[key])
+        x2 = requests.get(x2).content
+        x2 = Image.open(io.BytesIO(x2))
+        x2 = self.transform(x2)
+        x2.show()
+
+        return key
 
     def __len__(self):
         # Return length of data
@@ -69,17 +87,5 @@ class Data(Dataset):
 with open("dataset.json", "rb") as file:
     dataset = json.load(file)
 
-data = {}
-
-for post in dataset["posts"]:
-    for tag in post["tags"]:
-        if tag not in data:
-            data.update({tag: [post["image"]]})
-
-        elif tag in data:
-            data.update({tag: data[tag] + [post["image"]]})
-
-print(len(data))
-
-with open("data.json", "w") as file:
-    json.dump(data, file)
+data = Data(dataset)
+print(data[81])
