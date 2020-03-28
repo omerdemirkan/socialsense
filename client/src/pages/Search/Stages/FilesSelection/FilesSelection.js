@@ -52,7 +52,7 @@ export default function FilesSelection(props) {
     }
 
     function fileDeletedHandler(file) {
-        axios.delete('/delete_image', {
+        axios.post('/delete_image', {
             id: file.id
         })
         .then(res => {
@@ -64,8 +64,6 @@ export default function FilesSelection(props) {
 
         props.deleteFileById(file.id)
     }
-
-    console.log(props.files);
 
     return <div className='fade-in-on-load'>
         <h2 className='page-header'>
