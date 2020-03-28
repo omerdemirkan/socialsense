@@ -40,7 +40,7 @@ export default function FilesSelection(props) {
 
             <button
             onClick={() => inputRef.current.click()}
-            >Choose File</button>
+            className='secondary-button large full-width'>Choose File</button>
 
             <ul className={classes.FileNameList}>
                 {props.files.map(file => {

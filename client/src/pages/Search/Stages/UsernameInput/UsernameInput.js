@@ -30,7 +30,11 @@ export default function UsernameInput(props) {
                 <span className={classes.AtSymbol}>@</span>
             </span>
             
-            <button onClick={props.nextStage}>Submit</button>
+            <button 
+            className='primary-button large full-width' 
+            onClick={props.nextStage}>
+                Submit
+            </button>
         </div>
     </ThemeProvider>
 }
