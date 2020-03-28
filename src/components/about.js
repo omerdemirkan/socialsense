@@ -4,7 +4,7 @@ class About extends Component {
     render() {
         return(
             <div>
-                <img src="img/bruh.svg"/>
+                
             </div>
         )
     }

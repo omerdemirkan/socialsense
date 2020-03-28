@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Cell, Grid } from 'react-mdl';
-import Bruh from '../bruh.svg'
 
 class LandingPage extends Component {
     render() {
