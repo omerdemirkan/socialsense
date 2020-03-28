@@ -11,3 +11,7 @@ export function updateStage(stage) {
 export function addFile(file) {
     return {type: actionTypes.ADD_FILE, file}
 }
+
+export function deleteFileByName(fileName) {
+    return { type: actionTypes.DELETE_FILE, fileName }
+}

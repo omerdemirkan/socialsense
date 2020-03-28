@@ -7,11 +7,20 @@ import FilesSelection from './Stages/FilesSelection/FilesSelection';
 
 // Redux
 import { connect } from 'react-redux';
-import { updateUsername, updateStage, addFile } from '../../store/actions/index';
+import { 
+    updateUsername, 
+    updateStage, 
+    addFile,
+    deleteFileByName
+} from '../../store/actions/index';
 
 function Search(props) {
 
-    console.log(props.files);
+    function deleteFileByName(fileName) {
+
+    }
+
+
     let stage = null;
     switch(props.stage) {
         case 1:
@@ -24,8 +33,12 @@ function Search(props) {
         case 2:
             stage = <FilesSelection
             addFile={props.onAddFile}
+            files={props.files}
+            deleteFileByName={props.onDeleteFileByName}
             />
     }
+
+
     return <div>
 
         {stage}
@@ -46,7 +59,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onUpdateUsername: text => dispatch(updateUsername(text)),
         onUpdateStage: stage => dispatch(updateStage(stage)),
-        onAddFile: file => dispatch(addFile(file))
+        onAddFile: file => dispatch(addFile(file)),
+        onDeleteFileByName: fileName => dispatch(deleteFileByName(fileName))
     }
 }
 

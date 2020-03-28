@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './UsernameInput.module.css';
 
 export default function UsernameInput(props) {
-    return <div>
+    return <>
 
         <h2 className='page-header'>
             What Is Your Instagram Handle?
@@ -14,5 +14,5 @@ export default function UsernameInput(props) {
             onChange={e => props.updateUsername(e.target.value)}/>
             <button onClick={props.nextStage}>Submit</button>
         </div>
-    </div>
+    </>
 }
