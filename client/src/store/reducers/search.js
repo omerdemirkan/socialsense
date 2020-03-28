@@ -23,6 +23,11 @@ export default function searchReducer(state = initialState, action) {
                 ...state,
                 files: [...state.files, action.file]
             }
+        case actionTypes.DELETE_FILE:
+            return {
+                ...state,
+                files: state.files.filter(file => file.name !== action.fileName)
+            }
         default: 
             return state;
     }
