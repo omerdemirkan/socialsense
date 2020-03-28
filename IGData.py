@@ -64,7 +64,6 @@ def rank_tags(username, image, total=100, num_starting=30):
 
     return tag_scores
 
-
 def initialize_drivers():
     """Initialize selenium webdrivers. Calling beforehand can save time later."""
     global drivers
@@ -85,7 +84,7 @@ def _scrape(starting_tags, post_scraper, total):
         print(f'Current hashtags: {curr_tags}')
         
         pool = Pool(len(curr_tags))
-        args = [[curr_tags[i], i] for i in range(len(curr_tags))]
+        args = [[curr_tags[i], post_scraper, i] for i in range(len(curr_tags))]
         results = pool.starmap(_scrape_tag, args)
         pool.close()
         pool.join()
@@ -132,7 +131,7 @@ def _get_user(username, driver):
         )
         inputs = driver.find_elements_by_css_selector('input')
         button = driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF')
-        inputs[0].send_keys(login) #TODO: add username, pass variables that user can set
+        inputs[0].send_keys(login)
         inputs[1].send_keys(password)
         button.click()
         WebDriverWait(driver, 30).until(
@@ -143,7 +142,7 @@ def _get_user(username, driver):
     body = driver.find_element_by_css_selector('body')
     return json.loads(body.text)
 
-def _scrape_tag(tag, driver_index, num_related=5):
+def _scrape_tag(tag, post_scraper, driver_index, num_related=5):
     try:
         driver = drivers[driver_index]
         driver.get(f'https://www.instagram.com/explore/tags/{tag}')
@@ -162,7 +161,7 @@ def _scrape_tag(tag, driver_index, num_related=5):
         except NoSuchElementException:
             related_tags = []
 
-        image_data = [_scrape_post_engagement(post, driver) for post in posts]
+        image_data = [post_scraper(post, driver) for post in posts]
         return image_data, related_tags
     except:
         print(f'Could not get top posts for {tag}')
