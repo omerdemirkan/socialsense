@@ -9,7 +9,7 @@ export default function searchReducer(state = initialState, action) {
         case actionTypes.UPDATE_USERNAME:
             return {
                 ...state,
-                username: action.username
+                username: action.text
             }
         default: 
             return state;

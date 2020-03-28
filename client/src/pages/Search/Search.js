@@ -5,9 +5,29 @@ import classes from './Search.module.css';
 import UsernameInput from './Stages/UsernameInput/UsernameInput';
 import FilesSelection from './Stages/FilesSelection/FilesSelection';
 
-export default function Search() {
+// Redux
+import { connect } from 'react-redux';
+import { updateUsername } from '../../store/actions/index';
+
+function Search(props) {
     return <div>
-        <UsernameInput/>
+        <UsernameInput
+        username={props.username}
+        updateUsername={props.onUpdateUsername}/>
         <FilesSelection/>
     </div>
 }
+
+const mapStateToProps = state => {
+    return {
+        username: state.search.username
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onUpdateUsername: text => dispatch(updateUsername(text))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
