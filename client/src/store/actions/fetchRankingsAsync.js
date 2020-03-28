@@ -3,22 +3,21 @@ import * as actionTypes from './actionTypes';
 
 export default function fetchRankingsAsync(image, id) {
     return dispatch => {
-        dispatch(searchImagesStart())
+        dispatch(rankImagesStart())
 
-        axios.post('https://localhost:5000/add_image', {
-            id,
-            image
+        axios.get('/rank_images')
+        .then(res => {
+            rankImagesSuccess(res.data)
         })
-        .then()
         .catch();
     }
     // https://localhost:5000/rank_images
 }
 
-function searchImagesStart() {
-    return { type: actionTypes.SEARCH_IMAGES_START }
+function rankImagesStart() {
+    return { type: actionTypes.RANK_IMAGES_START }
 }
 
-function searchImagesSuccess() {
-    return { type: actionTypes.SEARCH_IMAGES_SUCCESS }
+function rankImagesSuccess(rankings) {
+    return { type: actionTypes.RANK_IMAGES_SUCCESS, rankings }
 }

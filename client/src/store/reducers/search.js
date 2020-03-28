@@ -4,8 +4,9 @@ const initialState = {
     username: '',
     stage: 1,
     files: [],
-    searchImagesLoading: false,
-    fileCounter: 0
+    rankImagesLoading: false,
+    fileCounter: 0,
+    imagesAreRanked: false
 }
 
 export default function searchReducer(state = initialState, action) {
@@ -31,10 +32,27 @@ export default function searchReducer(state = initialState, action) {
                 ...state,
                 files: state.files.filter(file => file.id !== action.id)
             }
-        case actionTypes.SEARCH_IMAGES_START:
+        case actionTypes.RANK_IMAGES_START:
             return {
                 ...state,
-                searchImagesLoading: true
+                rankImagesLoading: true
+            }
+        case actionTypes.RANK_IMAGES_SUCCESS:
+            const rankingIds = action.rankings.map(ranking => ranking.id);
+
+            const newFiles = [...state.files].map(fileObject => {
+                return {
+                    ...fileObject,
+                    score: action.rankings[rankingIds.indexOf(fileObject.id)]
+                }
+            })
+
+            newFiles.sort((a, b) => b.score - a.score)
+
+            return {
+                ...state,
+                files: newFiles,
+                imagesAreRanked: true
             }
         default: 
             return state;
