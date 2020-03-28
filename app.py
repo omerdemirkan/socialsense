@@ -13,7 +13,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 app = Flask(__name__)
 CORS(app)
-# IGData.initialize_drivers()
+IGData.initialize_drivers()
 images = {}
 """Base64 encoded strings of images the user wants to predict popularity for. Key is a unique id."""
 
@@ -59,8 +59,8 @@ def rank_hashtags():
     IGData.login = os.environ['IGLOGIN']
     IGData.password = os.environ['IGPASS']
 
-    #TODO: read image string into PIL object
-    tag_scores = IGData.rank_tags(username, images[id], 8, 8) #TODO: change these vals
+    image = Image.open(BytesIO(base64.b64decode(images[id])))
+    tag_scores = IGData.rank_tags(username, image, 24, 8) #TODO: change these vals
     res_body = {
         'hashtags': []
     }

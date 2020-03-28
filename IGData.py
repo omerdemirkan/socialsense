@@ -1,10 +1,14 @@
 import json
 import re
 import os
+import io
 import traceback
+import requests
 from random import random
 from collections import deque
 from multiprocessing import Pool
+from model import model
+from PIL import Image
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
@@ -52,6 +56,7 @@ def rank_tags(username, image, total=100, num_starting=30):
 
     seen_tags = _scrape(_get_user_tags(username, num_starting), _scrape_post_engagement, total)
 
+    print('Scoring hashtags')
     tag_scores = {}
     for tag in seen_tags:
         # skip failed tags
@@ -250,4 +255,12 @@ def _get_engagement_diff(username, post_like_count, driver, num_posts=10):
 
 
 def _similarity(image, img_link):
-    return random()  # TODO: implement actual similarity with model
+    try:
+        comparison_img_res = requests.get(img_link).content
+        comparison_img = Image.open(io.BytesIO(comparison_img_res))
+
+        similarity_model = model.Model("color-10-128.model")
+        return similarity_model.predict(image, comparison_img)
+    except Exception:
+        print(f'Unable to get similarity for image: {img_link}')
+        return 0 # don't consider an image that errored
