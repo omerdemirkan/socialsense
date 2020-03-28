@@ -17,12 +17,10 @@ pool_size = 8
 visible = False
 drivers = []
 
-top_100_tags = ['love', 'instagood', 'photooftheday', 'fashion', 'Beautiful', 'like4like', 'picoftheday', 'art', 'happy', 'photography', 'instagram', 'followme', 'style', 'follow', 'instadaily', 'travel', 'life', 'cute', 'fitness', 'nature', 'beauty', 'girl', 'fun', 'photo', 'amazing', 'likeforlike', 'instalike', 'Selfie', 'smile', 'me', 'lifestyle', 'model', 'follow4follow', 'music', 'friends', 'motivation', 'like', 'food', 'inspiration', 'Repost', 'summer', 'design', 'makeup', 'TBT', 'followforfollow', 'ootd', 'Family',
-                'l4l', 'cool', 'igers', 'TagsForLikes', 'hair', 'instamood', 'sun', 'vsco', 'fit', 'beach', 'photographer', 'gym', 'artist', 'girls', 'vscocam', 'autumn', 'pretty', 'luxury', 'instapic', 'black', 'sunset', 'funny', 'sky', 'blogger', 'hot', 'healthy', 'work', 'bestoftheday', 'workout', 'f4f', 'nofilter', 'london', 'goals', 'blackandwhite', 'blue', 'swag', 'health', 'party', 'night', 'landscape', 'nyc', 'happiness', 'pink', 'lol', 'foodporn', 'newyork', 'fitfam', 'awesome', 'fashionblogger', 'Halloween', 'Home', 'fall', 'paris']
+top_100_tags = ['love', 'instagood', 'photooftheday', 'fashion', 'Beautiful', 'like4like', 'picoftheday', 'art', 'happy', 'photography', 'instagram', 'followme', 'style', 'follow', 'instadaily', 'travel', 'life', 'cute', 'fitness', 'nature', 'beauty', 'girl', 'fun', 'photo', 'amazing', 'likeforlike', 'instalike', 'Selfie', 'smile', 'me', 'lifestyle', 'model', 'follow4follow', 'music', 'friends', 'motivation', 'like', 'food', 'inspiration', 'Repost', 'summer', 'design', 'makeup', 'TBT', 'followforfollow', 'ootd', 'Family', 'l4l', 'cool', 'igers', 'TagsForLikes', 'hair', 'instamood', 'sun', 'vsco', 'fit', 'beach', 'photographer', 'gym', 'artist', 'girls', 'vscocam', 'autumn', 'pretty', 'luxury', 'instapic', 'black', 'sunset', 'funny', 'sky', 'blogger', 'hot', 'healthy', 'work', 'bestoftheday', 'workout', 'f4f', 'nofilter', 'london', 'goals', 'blackandwhite', 'blue', 'swag', 'health', 'party', 'night', 'landscape', 'nyc', 'happiness', 'pink', 'lol', 'foodporn', 'newyork', 'fitfam', 'awesome', 'fashionblogger', 'Halloween', 'Home', 'fall', 'paris']
 """top 100 hashtags from https://www.all-hashtag.com/top-hashtags.php, used as a starting point
 for create_dataset
 """
-
 
 def create_dataset(total=100, output_path='dataset.json'):
     """Creates dataset of posts consisting of image links and the hashtags they use.
@@ -43,11 +41,12 @@ def create_dataset(total=100, output_path='dataset.json'):
         json.dump(dataset_formatted, f, ensure_ascii=False)
 
 
+#TODO: handle case when user has no past hashtags
 def rank_tags(username, image, total=100, num_starting=30):
     """Rank hashtags for a user."""
 
     if login is None or password is None:
-        raise Exception('Missing login and password. Set values with set_login_password.')
+        raise Exception('Missing login and password.')
     if len(drivers) == 0:
         initialize_drivers()
 
@@ -72,6 +71,7 @@ def rank_tags(username, image, total=100, num_starting=30):
 
 def initialize_drivers():
     """Initialize selenium webdrivers. Calling beforehand can save time later."""
+    print('Initializing webdrivers for scraping')
     global drivers
     driver_options = Options()
     if not visible:
@@ -90,7 +90,7 @@ def _scrape(starting_tags, post_scraper, total):
 
     while len(tag_Q) > 0:
         curr_tags = [tag_Q.popleft() for _ in range(min(pool_size, len(tag_Q)))]
-        print(f'Current hashtags: {curr_tags}')
+        print(f'Currently scraping: {curr_tags}')
 
         pool = Pool(len(curr_tags))
         args = [[curr_tags[i], post_scraper, i] for i in range(len(curr_tags))]
@@ -145,7 +145,6 @@ def _get_user(username, driver):
         )
         inputs = driver.find_elements_by_css_selector('input')
         button = driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF')
-
         inputs[0].send_keys(login)
         inputs[1].send_keys(password)
 
@@ -205,7 +204,7 @@ def _scrape_post_engagement(post, driver):
 
     return [img_link, _get_engagement_diff(username, like_count, driver)]
 
-
+#TODO: handle tags being in comment by user
 def _scrape_post_tags(post, driver):
     driver.get(post)
     try:

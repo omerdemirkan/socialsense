@@ -1,7 +1,9 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    username: ''
+    username: '',
+    stage: 1,
+    files: []
 }
 
 export default function searchReducer(state = initialState, action) {
@@ -9,7 +11,22 @@ export default function searchReducer(state = initialState, action) {
         case actionTypes.UPDATE_USERNAME:
             return {
                 ...state,
-                username: action.username
+                username: action.text
+            }
+        case actionTypes.UPDATE_STAGE:
+            return {
+                ...state,
+                stage: action.stage
+            }
+        case actionTypes.ADD_FILE:
+            return {
+                ...state,
+                files: [...state.files, action.file]
+            }
+        case actionTypes.DELETE_FILE:
+            return {
+                ...state,
+                files: state.files.filter(file => file.name !== action.fileName)
             }
         default: 
             return state;
