@@ -8,11 +8,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    z-index: 10;
 }
 
-.Logo {
+.LogoText {
+    position: absolute;
+    top: 35px;
+    left: 10vw;
+    font-size: 1.5rem;
+}
+
+.LogoIcon {
     font-size: 2rem;
     font-weight: 600;
+}
+
+.LogoIcon img {
+    height: 70px;
 }
 
 .NavList {
@@ -22,6 +35,7 @@
     position: absolute;
     top: 25px;
     right: 4vw;
+    overflow: auto;
 
     width: 400px;
     display: flex;
@@ -30,4 +44,9 @@
 
 .NavList li {
     display: inline;
+}
+
+.ActiveLink {
+    font-weight: 500;
+    color: var(--accent);
 }
