@@ -1,7 +1,7 @@
 .Navbar {
     width: 100vw;
     height: 100px;
-    display: fixed;
+    position: fixed;
     top: 0;
     left: 0;
 
@@ -20,7 +20,7 @@
     padding-inline-start: 0;
 
     position: absolute;
-    top: 20px;
+    top: 25px;
     right: 4vw;
 
     width: 400px;

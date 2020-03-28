@@ -1,5 +1,5 @@
 .App {
-  
+  padding-top: 100px;
 }
 
 a {
@@ -8,5 +8,18 @@ a {
 }
 
 .page-wrapper {
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+.form-box {
+  width: 90vw;
+  max-width: 400px;
+  margin: auto;
 }
