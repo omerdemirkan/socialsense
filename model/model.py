@@ -200,9 +200,9 @@ class Model():
 if __name__ == "__main__":
     model = Model("color-1-128.model")
     # model.train()
-    file1 = open("test/meme1", "rb")
+    file1 = open("./test/meme1.png", "rb")
     im1 = Image.open(file1)
-    file2 = open("test/meme2", "rb")
+    file2 = open("./test/mountain2.png", "rb")
     im2 = Image.open(file2)
     print(model.predict(im1, im2))
     file1.close()
