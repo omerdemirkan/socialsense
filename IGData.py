@@ -41,11 +41,12 @@ def create_dataset(total=100, output_path='dataset.json'):
         json.dump(dataset_formatted, f, ensure_ascii=False)
 
 
+#TODO: handle case when user has no past hashtags
 def rank_tags(username, image, total=100, num_starting=30):
     """Rank hashtags for a user."""
 
     if login is None or password is None:
-        raise Exception('Missing login and password. Set values with set_login_password.')
+        raise Exception('Missing login and password.')
     if len(drivers) == 0:
         initialize_drivers()
 
@@ -70,6 +71,7 @@ def rank_tags(username, image, total=100, num_starting=30):
 
 def initialize_drivers():
     """Initialize selenium webdrivers. Calling beforehand can save time later."""
+    print('Initializing webdrivers for scraping')
     global drivers
     driver_options = Options()
     if not visible:
@@ -88,7 +90,7 @@ def _scrape(starting_tags, post_scraper, total):
 
     while len(tag_Q) > 0:
         curr_tags = [tag_Q.popleft() for _ in range(min(pool_size, len(tag_Q)))]
-        print(f'Current hashtags: {curr_tags}')
+        print(f'Currently scraping: {curr_tags}')
 
         pool = Pool(len(curr_tags))
         args = [[curr_tags[i], post_scraper, i] for i in range(len(curr_tags))]
@@ -155,6 +157,7 @@ def _get_user(username, driver):
     body = driver.find_element_by_css_selector('body')
     return json.loads(body.text)
 
+
 def _scrape_tag(tag, post_scraper, driver_index, num_related=5):
     try:
         driver = drivers[driver_index]
@@ -201,7 +204,7 @@ def _scrape_post_engagement(post, driver):
 
     return [img_link, _get_engagement_diff(username, like_count, driver)]
 
-
+#TODO: handle tags being in comment by user
 def _scrape_post_tags(post, driver):
     driver.get(post)
     try:
