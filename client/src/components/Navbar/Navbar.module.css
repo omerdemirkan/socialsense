@@ -1,0 +1,33 @@
+.Navbar {
+    width: 100vw;
+    height: 100px;
+    display: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Logo {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.NavList {
+    list-style: none;
+    padding-inline-start: 0;
+
+    position: absolute;
+    top: 20px;
+    right: 4vw;
+
+    width: 400px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.NavList li {
+    display: inline;
+}
