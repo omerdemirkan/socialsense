@@ -39,4 +39,9 @@ def scrape_tag(tag, driver_index, num_related=5):
 
     return posts, related_tags
 
+# remember to call this to prevent memory leaks
+def quit_drivers():
+    [driver.quit() for driver in drivers]
+
 scrape(['anime', 'rice', 'cats', 'dogs'])
+quit_drivers()
