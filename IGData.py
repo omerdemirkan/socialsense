@@ -17,12 +17,10 @@ pool_size = 8
 visible = False
 drivers = []
 
-top_100_tags = ['love', 'instagood', 'photooftheday', 'fashion', 'Beautiful', 'like4like', 'picoftheday', 'art', 'happy', 'photography', 'instagram', 'followme', 'style', 'follow', 'instadaily', 'travel', 'life', 'cute', 'fitness', 'nature', 'beauty', 'girl', 'fun', 'photo', 'amazing', 'likeforlike', 'instalike', 'Selfie', 'smile', 'me', 'lifestyle', 'model', 'follow4follow', 'music', 'friends', 'motivation', 'like', 'food', 'inspiration', 'Repost', 'summer', 'design', 'makeup', 'TBT', 'followforfollow', 'ootd', 'Family',
-                'l4l', 'cool', 'igers', 'TagsForLikes', 'hair', 'instamood', 'sun', 'vsco', 'fit', 'beach', 'photographer', 'gym', 'artist', 'girls', 'vscocam', 'autumn', 'pretty', 'luxury', 'instapic', 'black', 'sunset', 'funny', 'sky', 'blogger', 'hot', 'healthy', 'work', 'bestoftheday', 'workout', 'f4f', 'nofilter', 'london', 'goals', 'blackandwhite', 'blue', 'swag', 'health', 'party', 'night', 'landscape', 'nyc', 'happiness', 'pink', 'lol', 'foodporn', 'newyork', 'fitfam', 'awesome', 'fashionblogger', 'Halloween', 'Home', 'fall', 'paris']
+top_100_tags = ['love', 'instagood', 'photooftheday', 'fashion', 'Beautiful', 'like4like', 'picoftheday', 'art', 'happy', 'photography', 'instagram', 'followme', 'style', 'follow', 'instadaily', 'travel', 'life', 'cute', 'fitness', 'nature', 'beauty', 'girl', 'fun', 'photo', 'amazing', 'likeforlike', 'instalike', 'Selfie', 'smile', 'me', 'lifestyle', 'model', 'follow4follow', 'music', 'friends', 'motivation', 'like', 'food', 'inspiration', 'Repost', 'summer', 'design', 'makeup', 'TBT', 'followforfollow', 'ootd', 'Family', 'l4l', 'cool', 'igers', 'TagsForLikes', 'hair', 'instamood', 'sun', 'vsco', 'fit', 'beach', 'photographer', 'gym', 'artist', 'girls', 'vscocam', 'autumn', 'pretty', 'luxury', 'instapic', 'black', 'sunset', 'funny', 'sky', 'blogger', 'hot', 'healthy', 'work', 'bestoftheday', 'workout', 'f4f', 'nofilter', 'london', 'goals', 'blackandwhite', 'blue', 'swag', 'health', 'party', 'night', 'landscape', 'nyc', 'happiness', 'pink', 'lol', 'foodporn', 'newyork', 'fitfam', 'awesome', 'fashionblogger', 'Halloween', 'Home', 'fall', 'paris']
 """top 100 hashtags from https://www.all-hashtag.com/top-hashtags.php, used as a starting point
 for create_dataset
 """
-
 
 def create_dataset(total=100, output_path='dataset.json'):
     """Creates dataset of posts consisting of image links and the hashtags they use.
@@ -144,11 +142,7 @@ def _get_user(username, driver):
         )
         inputs = driver.find_elements_by_css_selector('input')
         button = driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF')
-<<<<<<< HEAD
         inputs[0].send_keys(login)
-=======
-        inputs[0].send_keys(login)  # TODO: add username, pass variables that user can set
->>>>>>> b1151940eada1f424d69770e78d4d872bc5425e2
         inputs[1].send_keys(password)
         button.click()
         WebDriverWait(driver, 30).until(
@@ -159,12 +153,7 @@ def _get_user(username, driver):
     body = driver.find_element_by_css_selector('body')
     return json.loads(body.text)
 
-<<<<<<< HEAD
 def _scrape_tag(tag, post_scraper, driver_index, num_related=5):
-=======
-
-def _scrape_tag(tag, driver_index, num_related=5):
->>>>>>> b1151940eada1f424d69770e78d4d872bc5425e2
     try:
         driver = drivers[driver_index]
         driver.get(f'https://www.instagram.com/explore/tags/{tag}')
