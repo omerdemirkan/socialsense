@@ -1,0 +1,101 @@
+:root {
+  --background: rgb(255, 255, 255);
+  --background-alt: rgb(245, 245, 245);
+  --accent: #CC00FF;
+  --accent-alt: rgb(190, 0, 238);
+  --primary: #ffffff;
+  --primary-alt: #3f3f3f;
+}
+
+.header-color {
+background: #8A2387;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #F27121, #E94057, #8A2387);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #F27121, #E94057, #8A2387); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.landing-grid {
+  background: #8A2387;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #F27121, #E94057, #8A2387);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #F27121, #E94057, #8A2387); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.banner-text { 
+  position: static;
+  color: rgb(255, 255, 255);
+  font-family: 'Helvetica Neue', sans-serif; 
+  font-size: 18vw; 
+  font-weight: bold; 
+  height: 100%;
+  letter-spacing: -1px; 
+  line-height: 1; 
+  text-align: center; 
+  animation: fadeIn ease 10s;
+  -webkit-animation: fadeIn ease 10s;
+  -moz-animation: fadeIn ease 10s;
+  -o-animation: fadeIn ease 10s;
+  -ms-animation: fadeIn ease 10s;
+}
+
+.phone-svg {
+  height: 400px;
+  position: relative;
+ 
+}
+
+.page-content {
+  background-color: #3f3f3f;
+}
+.fade-in {
+  animation: fadeIn ease 10s;
+  -webkit-animation: fadeIn ease 10s;
+  -moz-animation: fadeIn ease 10s;
+  -o-animation: fadeIn ease 10s;
+  -ms-animation: fadeIn ease 10s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+}}
+
+.App {
+  background-color: black;
+}
