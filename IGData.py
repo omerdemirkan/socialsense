@@ -1,3 +1,5 @@
+import json
+import os
 import traceback
 from collections import deque
 from multiprocessing import Pool
@@ -8,11 +10,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-pool_size = 4
-
-driver_options = Options()
-driver_options.add_argument('--headless')
-drivers = [Chrome('./chromedriver', options=driver_options) for _ in range(pool_size)]
+login, password = None, None
+pool_size = 1
+visible = False
+drivers = [] # will initialize with initialize_drivers
 
 def scrape(starting_tags):
     tag_Q = deque(starting_tags)
@@ -56,7 +57,6 @@ def scrape_tag(tag, driver_index, num_related=5):
         print(driver.page_source[:500])
         print(traceback.format_exc())
 
-
 def scrape_post_engagement(post, driver):
     driver.get(post)
     try:
@@ -71,13 +71,54 @@ def scrape_post_engagement(post, driver):
     like_count = like_count_btn.find_element_by_css_selector('span').text
     like_count = int(like_count.replace(',', ''))
 
-    return [img_link, like_count]
+    username_div = driver.find_element_by_css_selector('div.e1e1d')
+    username = username_div.find_element_by_css_selector('a').text
 
-    return img_link
+    return [img_link, get_engagement_diff(username, like_count, driver)]
+
+def get_engagement_diff(username, post_like_count, driver, num_posts=10):
+    user_json = get_user(username, driver)
+    follow_count = user_json['graphql']['user']['edge_followed_by']['count']
+    user_posts = user_json['graphql']['user']['edge_owner_to_timeline_media']['edges']
+    like_counts = [post['node']['edge_liked_by']['count'] for post in user_posts[:num_posts]]
+
+    post_engagement_rate = post_like_count / follow_count
+    avg_engagement_rate = sum(like_counts) / (len(like_counts) * follow_count)        
+    return post_engagement_rate - avg_engagement_rate
+    #TODO: perhaps skip videos...
+
+def get_user(username, driver):
+    driver.get(f'https://www.instagram.com/{username}/?__a=1')
+
+    # logging in if needed
+    if driver.page_source[:19] != '<html><head></head>':
+        inputs = WebDriverWait(driver, 30).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'input'))
+        )
+        inputs = driver.find_elements_by_css_selector('input')
+        button = driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF')
+        inputs[0].send_keys(os.environ['IGLOGIN']) #TODO: add username, pass variables that user can set
+        inputs[1].send_keys(os.environ['IGPASS'])
+        button.click()
+        WebDriverWait(driver, 30).until(
+            EC.title_is('Instagram')
+        )
+        driver.get(f'https://www.instagram.com/{username}/?__a=1')
+    
+    body = driver.find_element_by_css_selector('body')
+    return json.loads(body.text)
+
+def initialize_drivers():
+    global drivers
+    driver_options = Options()
+    if not visible: driver_options.add_argument('--headless')
+    drivers = [Chrome('./chromedriver', options=driver_options) for _ in range(pool_size)]
 
 # remember to call this to prevent memory leaks
 def quit_drivers():
     [driver.quit() for driver in drivers]
 
+visible = True
+initialize_drivers()
 scrape(['anime', 'rice', 'cats', 'dogs'])
 quit_drivers()
