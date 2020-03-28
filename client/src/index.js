@@ -8,15 +8,17 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom'
 
 // Redux
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, compose } from 'redux';
 import { Provider } from 'react-redux';
 import searchReducer from './store/reducers/search';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   search: searchReducer
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeEnhancers());
 
 const app = <Provider store={store}>
   <Router>
