@@ -1,5 +1,6 @@
 # Instagram post similarity model - Jaivin Wylde
 import torch
+import json
 
 import torch.nn as nn
 
@@ -55,3 +56,30 @@ class Data(Dataset):
         self.data = data
 
         self.len = len(self.data)
+
+    def __getitem__(self, index):
+        # Return sample
+        pass
+
+    def __len__(self):
+        # Return length of data
+        return self.len
+
+
+with open("dataset.json", "rb") as file:
+    dataset = json.load(file)
+
+data = {}
+
+for post in dataset["posts"]:
+    for tag in post["tags"]:
+        if tag not in data:
+            data.update({tag: [post["image"]]})
+
+        elif tag in data:
+            data.update({tag: data[tag] + [post["image"]]})
+
+print(len(data))
+
+with open("data.json", "w") as file:
+    json.dump(data, file)
