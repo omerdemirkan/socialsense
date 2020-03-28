@@ -1,8 +1,13 @@
 import os
 import atexit
 import IGData
+import torch
+import torchvision.models
+import torchvision.transforms as transforms
+from PIL import Image
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 #TODO: fix errors when sending large image files (perhaps via file streaming, i.e. sending in chunks)
 
@@ -14,13 +19,30 @@ IGData.initialize_drivers()
 #TODO: implement image ranking
 @app.route('/rank_images', methods=['POST'])
 def rank_images():
-    # sending JSON of dummy scores
+    req_body = request.get_json(force=True)
+    images = req_body['images']
+
+    # for testing purposes
+    img_path = 'Intrinsic-Image-Popularity/images/0.jpg'
+    
+    image = Image.open(img_path)
+    model = torchvision.models.resnet50()
+    model.fc = torch.nn.Linear(in_features=2048, out_features=1)
+    model.load_state_dict(torch.load('Intrinsic-Image-Popularity/model/model-resnet50.pth', map_location=device))
+    model.eval().to(device)
+    pred = predict(image, model)
+
     res_body = {
-        'scores': [325, 0, 90, 258, 721]
+        'scores': [pred]
     }
     res = make_response(jsonify(res_body))
     return res
 
+
+#  # sending JSON of dummy scores
+#     res_body = {
+#         'scores': [325, 0, 90, 258, 721]
+#     }
 
 @app.route('/rank_hashtags', methods=['POST'])
 def rank_hashtags():
@@ -44,6 +66,22 @@ def rank_hashtags():
     res = make_response(jsonify(res_body))
     return res
 
+def prepare_image(image):
+    if image.mode != 'RGB':
+        image = image.convert("RGB")
+    Transform = transforms.Compose([
+            transforms.Resize([224,224]),      
+            transforms.ToTensor(),
+            ])
+    image = Transform(image)   
+    image = image.unsqueeze(0)
+    return image.to(device)
+
+def predict(image, model):
+    image = prepare_image(image)
+    with torch.no_grad():
+        preds = model(image)
+    return preds.item()
 
 def close_server():
     IGData.quit_drivers()

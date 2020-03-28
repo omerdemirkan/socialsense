@@ -6,3 +6,4 @@ env/
 chromedriver
 test.html
 test.js
+test/
