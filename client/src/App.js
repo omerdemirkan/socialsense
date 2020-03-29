@@ -18,7 +18,9 @@ import Footer from './components/Footer/Footer';
 function App() {
   return <div className="App dark-mode">
     <Navbar/>
-    <div className='page-wrapper fade-in-on-load'>
+    <div 
+    className='page-wrapper fade-in-on-load'
+    style={{animationDelay: '2.4s', animationDuration: '.6s'}}>
 
       <Switch>
         <Route path='/about' component={About}/>

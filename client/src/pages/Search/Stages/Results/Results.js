@@ -6,9 +6,15 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Hashtag from '../../../../components/Hashtag/Hashtag';
 
+// Material UI
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 export default function Results(props) {
 
     const [inspectedHashtag, setInspectedHashtag] = useState('');
+    const [copyToClipboardModal, setCopyToClipboardModal] = useState(false);
 
     function deleteHashtag(hashtag) {
         const newHashtags = props.hashtags.filter(hashtagObject => {
@@ -27,8 +33,6 @@ export default function Results(props) {
             
         </div>
     }
-
-    console.log(Object.keys(props.hashtags));
     
     return <div className=' fade-in-on-load'>
         <div className={classes.Main}>
@@ -50,17 +54,35 @@ export default function Results(props) {
                     </li>
                 })}
             </ul>
+            
             <CopyToClipboard text={
                 '@' + 
                 props.hashtags.map(
                 hashtag => Object.keys(hashtag)[0])
                 .join(' @')
             }
-            onCopy={() => {}}>
+            onCopy={() => setCopyToClipboardModal(true)}>
 
                 <button className='primary-button large full-width'>Copy To Clipboard</button>
             </CopyToClipboard>
 
         </div>
+
+        <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={copyToClipboardModal}
+        autoHideDuration={3000}
+        onClose={() => setCopyToClipboardModal(false)}
+        message="Copied To Clipboard"
+        action={
+            <IconButton size="small" aria-label="close" color="inherit" onClick={() => setCopyToClipboardModal(false)}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+        }
+        />
+
     </div>
 }
