@@ -94,9 +94,6 @@ button.primary-button:hover {
   background-color: var(--accent-alt);
 }
 
-button.secondary-button:hover {
-  
-}
 
 button.large {
   height: 45px;
