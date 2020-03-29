@@ -1,9 +1,9 @@
 :root {
-  --background: rgb(255, 255, 255);
+  --background: rgb(37, 37, 37);
   --background-alt: rgb(248, 248, 248);
   --accent: #CC00FF;
   --accent-alt: rgb(190, 0, 238);
-  --primary: #303030;
+  --primary: #ffffff;
   --primary-alt: #3f3f3f;
   --medium: #b9b9b9;
 }
@@ -109,3 +109,71 @@ button.full-width {
     opacity: 1;
   }
 }
+
+h1 {
+  position: static;
+  color: rgb(255, 255, 255);
+  font-family: 'Helvetica Neue', sans-serif; 
+  font-size: 17vw; 
+  font-weight: bold; 
+  height: 100%;
+  letter-spacing: -1px; 
+  line-height: 1; 
+  text-align: center; 
+  animation: fadeIn ease 10s;
+  -webkit-animation: fadeIn ease 10s;
+  -moz-animation: fadeIn ease 10s;
+  -o-animation: fadeIn ease 10s;
+  -ms-animation: fadeIn ease 10s;
+}
+
+.fade-in {
+  animation: fadeIn ease 10s;
+  -webkit-animation: fadeIn ease 10s;
+  -moz-animation: fadeIn ease 10s;
+  -o-animation: fadeIn ease 10s;
+  -ms-animation: fadeIn ease 10s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+}}
