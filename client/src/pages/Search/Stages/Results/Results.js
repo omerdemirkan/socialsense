@@ -35,13 +35,32 @@ export default function Results(props) {
             
         </div>
     }
+    console.log(props.profileImageSrc);
     
     return <div className=' fade-in-on-load'>
         <ScrollUpOnMount/>
+
         <div className={classes.Main}>
+            
+            <img 
+            src={props.profileImageSrc}
+            className={classes.ProfilePic}/>
+
+            <span className={classes.Handle}>
+                @<span className='accented-text'>{props.handle}</span>
+            </span>
+
+            <div className={classes.DotsBox}>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
             <img
             src={props.file.src}
+            className={classes.Image}
             />
+
             <ul className={classes.HashtagList}>
                 {props.hashtags.map((hashtag, index) => {
                     const text = Object.keys(hashtag)[0];

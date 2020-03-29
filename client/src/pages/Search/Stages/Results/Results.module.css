@@ -1,11 +1,11 @@
 .Main {
     width: 90vw;
     max-width: 450px;
-
+    position: relative;
     margin: auto;
 }
 
-.Main img {
+.Image {
     width: 100%;
 }
 
@@ -35,4 +35,36 @@
 
 .HashtagList li:hover .AtSymbol {
     color: var(--accent);
+}
+
+.ProfilePic {
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    z-index: 10;
+    margin: 10px;
+}
+
+.DotsBox {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+
+    display: flex;
+    
+}
+
+.DotsBox div {
+    width: 6px;
+    height: 6px;
+    background-color: var(--medium);
+    margin: 0 3px;
+
+    border-radius: 2rem;
+}
+
+.Handle {
+    position: absolute;
+    top: 20px;
+    left: 70px;
 }

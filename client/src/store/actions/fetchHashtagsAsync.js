@@ -2,7 +2,6 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
 export default function fetchHashtagsAsync(username, file) {
-    console.log('Fetching hashtags');
     return dispatch => {
         dispatch(fetchHashtagsStart())
 
@@ -11,7 +10,6 @@ export default function fetchHashtagsAsync(username, file) {
             username
         })
         .then(res => {
-            console.log(res.data);
             dispatch(fetchHashtagsSuccess(file, res.data.hashtags))
         })
         .catch();

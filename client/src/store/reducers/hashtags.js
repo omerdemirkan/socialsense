@@ -16,6 +16,7 @@ export default function(state = initialState, action) {
             }
         case actionTypes.FETCH_HASHTAGS_SUCCESS:
             return {
+                ...state,
                 file: action.file,
                 loading: false,
                 hashtags: action.hashtags

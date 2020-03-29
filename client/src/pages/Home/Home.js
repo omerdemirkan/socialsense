@@ -3,8 +3,6 @@ import classes from './Home.module.css';
 
 import ScrollUpOnMount from '../../components/ScrollUpOnMount/ScrollUpOnMount';
 
-
-
 function Home() {
     return <div>
         <ScrollUpOnMount/>

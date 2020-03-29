@@ -33,7 +33,7 @@ export default function FilesSelection(props) {
                         image: reader.result.split(',')[1]
                     })
                     .then(res => {
-                        console.log(res);
+                        // console.log(res);
                     })
                     .catch(err => {
                         console.error(err);
@@ -69,7 +69,7 @@ export default function FilesSelection(props) {
         props.deleteFileById(file.id)
     }
 
-    console.log(props.files);
+    // console.log(props.files);
 
     return <div className='fade-in-on-load'>
         <ScrollUpOnMount/>  

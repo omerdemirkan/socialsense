@@ -1,6 +1,8 @@
 import React from 'react';
 import classes from './Search.module.css';
 
+import axios from 'axios'
+
 // Stages
 import UsernameInput from './Stages/UsernameInput/UsernameInput';
 import FilesSelection from './Stages/FilesSelection/FilesSelection';
@@ -27,6 +29,17 @@ function Search(props) {
         props.onUpdateStage(4);
     }
 
+    function fetchProfileImageSrc() {
+        axios.get(`https://www.instagram.com/${props.username}/?__a=1`)
+        .then(res => {
+            const src = res.data.graphql.user.profile_pic_url_hd;
+            console.log(src);
+            props.onSetProfileImageSrc(src)
+
+        })
+
+    }
+
     let stage = null;
 
     switch(props.stage) {
@@ -36,7 +49,7 @@ function Search(props) {
             updateUsername={props.onUpdateUsername}
             nextStage={() => {
                 props.onUpdateStage(2)
-
+                fetchProfileImageSrc();
             }}
             />
             break;
@@ -65,6 +78,8 @@ function Search(props) {
             hashtags={props.hashtags}
             file={props.hashtagFile}
             setHashtags={props.onSetHashtags}
+            profileImageSrc={props.profileImageSrc}
+            handle={props.username}
             />
     }
 
@@ -88,7 +103,8 @@ const mapStateToProps = state => {
 
         hashtagsLoading: state.hashtags.loading,
         hashtags: state.hashtags.hashtags,
-        hashtagFile: state.hashtags.file
+        hashtagFile: state.hashtags.file,
+        profileImageSrc: state.hashtags.profileImageSrc
     }
 }
 
@@ -104,7 +120,10 @@ const mapDispatchToProps = dispatch => {
             // console.log(hashtags)
             dispatch(setHashtags(hashtags))
         },
-        onSetProfileImageSrc: src => dispatch(setProfileImageSrc(src))
+        onSetProfileImageSrc: src => {
+            console.log(src);
+            dispatch(setProfileImageSrc(src))
+        }
     }
 }
 
