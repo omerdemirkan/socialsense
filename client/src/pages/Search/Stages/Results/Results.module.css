@@ -1,0 +1,39 @@
+.Main {
+    width: 90vw;
+    max-width: 450px;
+
+    margin: 10vh auto;
+}
+
+.Main img {
+    width: 100%;
+}
+
+.HashtagList {
+    /* text-align: center; */
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.HashtagList li {
+    position: relative;
+    margin: 8px 0;
+    cursor: pointer;
+    background-color: var(--background-alt);
+    border-radius: 3px;
+}
+
+.ScoreBox {
+    position: absolute;
+    right: 120%;
+    top: 0;
+    width: 100px;
+}
+
+.AtSymbol {
+    
+}
+
+.HashtagList li:hover .AtSymbol {
+    color: var(--accent);
+}

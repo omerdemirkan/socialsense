@@ -28,19 +28,21 @@ app.get('/rank_images', (req, res) => {
     console.log('ranking images', '\n-----------------');
 
     setTimeout(() => {
-        res.json({
+        const response = {
             scores: files.map(file => {
                 return{
                     id: file.id, 
                     score: file.score
                 }
             })
-        });
-    }, 2000);
+        }
+        console.log(response);
+        res.json(response);
+    }, 500);
     
 })
 
-app.get('/rank_hashtags', (req, res) => {
+app.post('/rank_hashtags', (req, res) => {
     console.log('retrieving hashtags', '\n-----------------');
 
     setTimeout(() => {
@@ -56,7 +58,7 @@ app.get('/rank_hashtags', (req, res) => {
                 {bigandthiccchunk: Math.random()},
             ].sort((a, b) => b - a)
         });
-    }, 2000);
+    }, 500);
     
 })
 

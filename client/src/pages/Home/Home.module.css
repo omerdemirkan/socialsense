@@ -3,6 +3,7 @@
     color: rgb(255, 255, 255);
     font-family: 'Helvetica Neue', sans-serif; 
     font-size: 18vw; 
+    margin: 0;
     font-weight: bold; 
     height: 100%;
     letter-spacing: -1px; 
@@ -13,4 +14,31 @@
     -moz-animation: fadeIn ease 10s;
     -o-animation: fadeIn ease 10s;
     -ms-animation: fadeIn ease 10s;
+}
+
+.Bruh h1 {
+    position: static;
+    color: rgb(255, 255, 255);
+    font-family: 'Helvetica Neue', sans-serif; 
+    font-size: 17vw; 
+    
+    font-weight: bold; 
+    height: 100%;
+    letter-spacing: -1px; 
+    line-height: 1; 
+    text-align: center; 
+    animation: fadeIn ease 10s;
+    -webkit-animation: fadeIn ease 10s;
+    -moz-animation: fadeIn ease 10s;
+    -o-animation: fadeIn ease 10s;
+    -ms-animation: fadeIn ease 10s;
+}
+
+@media (min-width: 1200px) {
+
+    .Bruh h1 {
+        font-size: 10rem;
+        padding: 0 30vw;
+    }
+
 }

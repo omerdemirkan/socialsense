@@ -13,12 +13,12 @@ export default function ImageSelection(props) {
 
 
     let delay = 0;
-    return <div className={classes.ImageSelection}>
+    return <div className={classes.ImageSelection + ' fade-in-on-load'}>
         <h2 className='page-header'>Ranked from highest to lowest expected engagement</h2>
         <ul className={classes.ImagesList}>
 
             {props.files.map(file => {
-
+                console.log(file)
                 delay += .05;
                 return <li 
                 className='fade-in-on-load' 
@@ -34,6 +34,7 @@ export default function ImageSelection(props) {
                     <img 
                     src={file.src}/>
 
+                    
                     <button
                     className='primary-button large full-width'
                     style={{margin: '0'}}
