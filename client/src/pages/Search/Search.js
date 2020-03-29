@@ -58,7 +58,6 @@ function Search(props) {
             stage = <Results
             loading={props.hashtagsLoading}
             />
-
     }
 
 
