@@ -14,12 +14,14 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import searchReducer from './store/reducers/search';
+import hashtagsReducer from './store/reducers/hashtags';
 import thunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  search: searchReducer
+  search: searchReducer,
+  hashtags: hashtagsReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

@@ -5,6 +5,7 @@
   --accent-alt: rgb(190, 0, 238);
   --primary: #ffffff;
   --primary-alt: #3f3f3f;
+  --medium: #b9b9b9;
 }
 
 .App {
@@ -40,12 +41,13 @@ button {
 .form-box {
   width: 90vw;
   max-width: 400px;
-  margin: auto;
+  margin: 10vh auto;
 }
 
 .loader-box {
   display: flex;
   justify-content: center;
+  margin-top: 20vh;
 }
 
 .accented-text {
@@ -96,7 +98,7 @@ button.full-width {
 
 .fade-in-on-load {
   opacity: 0;
-  animation: FadeIn 0.2s ease forwards;
+  animation: FadeIn 0.3s ease forwards;
 }
 
 @keyframes FadeIn {

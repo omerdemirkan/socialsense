@@ -26,14 +26,18 @@ app.post('/delete_image', (req, res) => {
 
 app.get('/rank_images', (req, res) => {
     console.log('ranking images', '\n-----------------');
-    res.json({
-        scores: files.map(file => {
-            return{
-                id: file.id, 
-                score: file.score
-            }
-        })
-    });
+
+    setTimeout(() => {
+        res.json({
+            scores: files.map(file => {
+                return{
+                    id: file.id, 
+                    score: file.score
+                }
+            })
+        });
+    }, 2000);
+    
 })
 
 app.listen(5000, () => {

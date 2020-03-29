@@ -23,11 +23,12 @@ export default function FilesSelection(props) {
             if (file.size / Math.pow(2, 20) < 5) {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = function() {
+
+                reader.onload = function(e) {
 
                     axios.post('/add_image', {
                         id: props.fileCounter,
-                        image: reader.result
+                        image: reader.result.split(',')[1]
                     })
                     .then(res => {
                         console.log(res);
@@ -39,7 +40,8 @@ export default function FilesSelection(props) {
                     props.addFile({
                         name: file.name,
                         id: props.fileCounter,
-                        base64: reader.result
+                        base64: reader.result.split(',')[1],
+                        src: e.target.result
                     });
 
                 }
@@ -64,6 +66,8 @@ export default function FilesSelection(props) {
 
         props.deleteFileById(file.id)
     }
+
+    console.log(props.files);
 
     return <div className='fade-in-on-load'>
         <h2 className='page-header'>
