@@ -18,6 +18,8 @@
 
 .Text a {
     transition: color 0.1s ease;
+    position: relative;
+    
 }
 
 .Text a:hover {
@@ -68,4 +70,32 @@
     right: 0;
     top: 6px;
     transform: rotate(-45deg);
+}
+
+.Invisible {
+    opacity: 0;
+}
+
+.LinkNotifier {
+    position: absolute;
+    width: 120px;
+    top: 0;
+    left: 100%;
+    transform: translate(20px);
+    text-align: center;
+
+    background-color: var(--background);
+    z-index: 9;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, .1);
+
+    opacity: 0;
+    display: none;
+    transition: opacity 0.3s ease;
+}
+
+.Text a:hover .LinkNotifier {
+    display: block;
+    opacity: 1;
 }

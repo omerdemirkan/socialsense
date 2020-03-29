@@ -4,7 +4,7 @@ import classes from './Hashtag.module.css';
 export default function Hashtag(props) {
     return <div 
     className={classes.Hashtag + ' fade-in-on-load'} 
-    style={!props.inspected ? {height: '20px', transition: 'height 0.2s ease'}: null}>
+    style={!props.inspected ? {height: '20px', transition: 'height 0.2s ease', animationDelay: props.delay}: {animationDelay: props.delay}}>
         <p 
         className={classes.Text}
         onClick={!props.inspected ? props.onInspect : props.onCloseInspect}>
@@ -14,7 +14,13 @@ export default function Hashtag(props) {
                 <span 
                 style={props.inspected ? {color: 'var(--accent)'} : null}
                 >#</span>
+
                 {props.text}
+
+                <div className={props.inspected ? classes.LinkNotifier : classes.Invisible} style={{color: 'var(--primary)'}}>
+                    See What's Popular For <span
+                    style={{color: 'var(--accent)'}}>#{props.text}</span>
+                </div>
             </a>
             
         </p>
@@ -31,8 +37,8 @@ export default function Hashtag(props) {
 
         <hr/>
 
-        <div className={classes.DataBox}>
-            <span>Score: {props.score.toFixed(4)}</span>
+        <div className={classes.DataBox}> 
+            <span>Predicted Engagement Increase: <span className='accented-text'>{(props.score * 100).toFixed(2)}%</span></span>
 
             <button 
             className='primary-button'

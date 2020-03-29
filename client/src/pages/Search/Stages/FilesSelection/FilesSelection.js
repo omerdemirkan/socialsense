@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import classes from './FilesSelection.module.css';
 
 import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
@@ -10,6 +10,8 @@ import axios from '../../../../axios';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 
 export default function FilesSelection(props) {
+
+    const [inspectedImage, setInspectedImage] = useState('')
 
     const inputRef = useRef();
 
@@ -74,13 +76,13 @@ export default function FilesSelection(props) {
     return <div className='fade-in-on-load'>
         <ScrollUpOnMount/>  
         <h2 className='page-header'>
-            What Images Are You Considering?
+            What Pics Are You Considering?
         </h2>
 
         <div className='form-box'>
 
             <input 
-            type='file' 
+            type='file'
             onChange={fileUpdatedHandler}
             ref={inputRef}
             style={{display: 'none'}}
@@ -88,14 +90,25 @@ export default function FilesSelection(props) {
 
             <button
             onClick={() => inputRef.current.click()}
-            className='secondary-button large full-width'>Choose File</button>
+            className='secondary-button large full-width'>Add File</button>
 
             <ul className={classes.FileNameList}>
                 {props.files.map(file => {
+
+                    const isInspected = file.name === inspectedImage;
+
+                    const toggle = () => setInspectedImage(isInspected ? '' : file.name)
+
                     return <li
-                    key={file.name}>
-                        {file.name}
+                    style={!isInspected ? {height: '40px', transition: 'height 0.3s ease'} : null}
+                    key={file.name}
+                    className='fade-in-on-load'>
+                        <span onClick={toggle}>{file.name}</span>
                         <ClearRoundedIcon onClick={() => fileDeletedHandler(file)}/>
+                        
+                        <img 
+                        src={file.src}
+                        style={{width: '100%', marginTop: '20px'}}/>
                     </li>
                 })}
             </ul>

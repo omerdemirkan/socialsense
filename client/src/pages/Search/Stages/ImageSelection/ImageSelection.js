@@ -19,8 +19,16 @@ export default function ImageSelection(props) {
 
     let delay = 0;
     return <div className={classes.ImageSelection + ' fade-in-on-load'}>
+
         <ScrollUpOnMount/>
-        <h2 className='page-header'>Ranked from highest to lowest expected engagement</h2>
+
+        <div style={{margin: 'auto', width: '90vw', maxWidth: '450px'}}>
+            <h2 className='page-header'>Here are those pics ranked from highest to lowest expected engagement</h2>
+            <h3 
+            className='fade-in-on-load'
+            style={{textAlign: 'center', animationDelay: '.5s', animationDuration: '1s'}}>Psst! ↓ This is the Best One!</h3>
+        </div>
+
         <ul className={classes.ImagesList}>
 
             {props.files.map(file => {
@@ -28,12 +36,12 @@ export default function ImageSelection(props) {
                 return <li 
                 className='fade-in-on-load' 
                 style={{animationDelay: delay + 's'}}>
-                    <span>{file.name}</span>
+                    <span style={{margin: '0 10px'}}>{file.name}</span>
 
                     <span
-                    style={{float: 'right'}}
+                    style={{float: 'right', margin: '0 10px'}}
                     >
-                        Score: {file.score.toFixed(4)}
+                        Score: {file.score.toFixed(3)}
                     </span>
 
                     <img 

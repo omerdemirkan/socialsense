@@ -11,13 +11,30 @@
 
 .FileNameList li {
     position: relative;
-    margin: 10px 0;
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 3px;
+    background-color: var(--background-alt);
+    overflow: hidden;
+    height: auto;
+    /* height: 40px; */
+    box-sizing: border-box;
+    transition: height 0.3s ease;
+}
+
+.FileNameList li span {
+    cursor: pointer;
+}
+
+.FileNameList li span:hover {
+    color: var(--accent);
+    transition: color 0.2s ease;
 }
 
 .FileNameList li svg {
     position: absolute;
-    left: 0;
-    top: 0;
+    right: 8px;
+    top: 7px;
 
     cursor: pointer;
     opacity: 0.3;

@@ -39,7 +39,8 @@ export default function Results(props) {
             
         </div>
     }
-    console.log(props.profileImageSrc);
+
+    let delay = 0.2;
     
     return <div className=' fade-in-on-load'>
         <ScrollUpOnMount/>
