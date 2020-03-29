@@ -40,6 +40,26 @@ app.get('/rank_images', (req, res) => {
     
 })
 
+app.get('/rank_hashtags', (req, res) => {
+    console.log('retrieving hashtags', '\n-----------------');
+
+    setTimeout(() => {
+        res.json({
+            hashtags: [
+                {thicc: Math.random()},
+                {chunk: Math.random()},
+                {yeetthethiccboy: Math.random()},
+                {lolol: Math.random()},
+                {thiccthethiccman: Math.random()},
+                {yeetthebigboojie: Math.random()},
+                {chunkytime: Math.random()},
+                {bigandthiccchunk: Math.random()},
+            ].sort((a, b) => b - a)
+        });
+    }, 2000);
+    
+})
+
 app.listen(5000, () => {
     console.log('We Live Baybee');
 })

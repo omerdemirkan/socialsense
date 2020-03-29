@@ -1,10 +1,10 @@
 import React from 'react'
-import './Home.module.css';
+import classes from './Home.module.css';
 
 function Home() {
     return (
-    <div className = "bruh">
-        <h1 className = "big-text">Discover your audience</h1>
+    <div className = {classes.Bruh}>
+        <h1 className>Discover your audience</h1>
     </div>  
     )
 }

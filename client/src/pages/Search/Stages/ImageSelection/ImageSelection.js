@@ -16,7 +16,9 @@ export default function ImageSelection(props) {
     return <div className={classes.ImageSelection}>
         <h2 className='page-header'>Ranked from highest to lowest expected engagement</h2>
         <ul className={classes.ImagesList}>
+
             {props.files.map(file => {
+
                 delay += .05;
                 return <li 
                 className='fade-in-on-load' 
@@ -25,7 +27,9 @@ export default function ImageSelection(props) {
 
                     <span
                     style={{float: 'right'}}
-                    >Score: {file.score}</span>
+                    >
+                        Score: {file.score}
+                    </span>
 
                     <img 
                     src={file.src}/>
@@ -33,9 +37,12 @@ export default function ImageSelection(props) {
                     <button
                     className='primary-button large full-width'
                     style={{margin: '0'}}
+                    onClick={() => props.fetchHashtagsByFile(file)}
                     >Get Hashtags!</button>
                 </li>
+
             })}
+
         </ul>
     </div>
 }

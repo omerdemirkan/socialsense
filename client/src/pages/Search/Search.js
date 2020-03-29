@@ -5,6 +5,7 @@ import classes from './Search.module.css';
 import UsernameInput from './Stages/UsernameInput/UsernameInput';
 import FilesSelection from './Stages/FilesSelection/FilesSelection';
 import ImageSelection from './Stages/ImageSelection/ImageSelection';
+import Results from './Stages/Results/Results';
 
 // Redux
 import { connect } from 'react-redux';
@@ -13,11 +14,16 @@ import {
     updateStage, 
     addFile,
     deleteFileById,
-    fetchRankingsAsync
+    fetchRankingsAsync,
+    fetchHashtagsAsync
 } from '../../store/actions/index';
 
 function Search(props) {
 
+    function fetchHashtagsByFile(file) {
+        props.onFetchHashtags(props.username, file);
+        props.onUpdateStage(4);
+    }
 
     let stage = null;
 
@@ -45,8 +51,13 @@ function Search(props) {
             imagesAreRanked={props.imagesAreRanked}
             loading={props.rankImagesLoading}
             files={props.files}
+            fetchHashtagsByFile={fetchHashtagsByFile}
             />
-
+            break;
+        case 4:
+            stage = <Results
+            loading={props.hashtagsLoading}
+            />
     }
 
 
@@ -65,7 +76,9 @@ const mapStateToProps = state => {
         files: state.search.files,
         fileCounter: state.search.fileCounter,
         rankImagesLoading: state.search.rankImagesLoading,
-        imagesAreRanked: state.search.imagesAreRanked
+        imagesAreRanked: state.search.imagesAreRanked,
+
+        hashtagsLoading: state.hashtags.loading
     }
 }
 
@@ -75,7 +88,8 @@ const mapDispatchToProps = dispatch => {
         onUpdateStage: stage => dispatch(updateStage(stage)),
         onAddFile: file => dispatch(addFile(file)),
         onDeleteFileById: id => dispatch(deleteFileById(id)),
-        onFetchRankings: () => dispatch(fetchRankingsAsync())
+        onFetchRankings: () => dispatch(fetchRankingsAsync()),
+        onFetchHashtags: (file, username) => dispatch(fetchHashtagsAsync(username, file))
     }
 }
 
