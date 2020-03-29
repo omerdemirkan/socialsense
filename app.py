@@ -89,7 +89,7 @@ def run_model(img_str):
 
     model = torchvision.models.resnet50()
     model.fc = torch.nn.Linear(in_features=2048, out_features=1)
-    model.load_state_dict(torch.load('Intrinsic-Image-Popularity/model/model-resnet50.pth', map_location=device))
+    model.load_state_dict(torch.load('popularity_model/model/model-resnet50.pth', map_location=device))
     model.eval().to(device)
 
     return predict(image, model)
