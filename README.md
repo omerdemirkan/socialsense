@@ -2,7 +2,7 @@
 <img src="assets/logo.png" title="Logo">
 </p>
 
-### Find the perfect image and hashtags to maximize your potential audience.
+### Use machine learning to find the perfect image and hashtags to reach a broader audience.
 
 *[Submission for LAHacks 2020](https://devpost.com/software/socialsense-ai)*
 
