@@ -6,8 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 // Images
 import logo from '../../images/logo.svg';
-
-
+import logo2 from '../../images/logo-2.svg';
 export default function Navbar() {
     
     const [minimize, setMinimize] = useState(false);
@@ -30,7 +29,7 @@ export default function Navbar() {
         <span className={classes.LogoIcon}>
             <NavLink to='/'>
                 <img 
-                src={logo}
+                src={logo2}
                 style={minimize ? {height: '70px', transition: 'height 0.2s ease'}: null}
                 />
             </NavLink>

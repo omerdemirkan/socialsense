@@ -6,7 +6,7 @@
   --accent-alt: rgb(190, 0, 238);
   --primary: #303030;
   --primary-alt: #3f3f3f;
-  --medium: #b9b9b9;
+  --medium: #4d4d4d;
 }
 
 .dark-mode {
@@ -24,6 +24,7 @@
   background-color: var(--background);
   color: var(--primary);
   font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
 }
 
 a {
@@ -35,17 +36,23 @@ button {
   outline: none;
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+}
+
+img {
+  
 }
 
 .page-wrapper {
   min-height: calc(100vh - 100px);
   box-sizing: border-box;
   overflow: auto;
+  padding: 10vh 0;
 }
 
 .page-header {
   text-align: center;
-  margin: 10vh 0 4vh;
+  margin: 3vh 0;
   font-weight: 500;
 }
 

@@ -43,7 +43,7 @@
     height: 4px;
     width: 16px;
     border-radius: 2rem;
-    background-color: var(--primary);
+    background-color: var(--medium);
     
     position: absolute;
     transition: 0.1s ease;
