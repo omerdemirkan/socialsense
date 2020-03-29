@@ -1,6 +1,6 @@
-.Bruh {
+.TextBox {
     position: static;
-    color: rgb(255, 255, 255);
+    color: var(--primary);
     font-family: 'Helvetica Neue', sans-serif; 
     font-size: 18vw; 
     margin: 0;
@@ -14,11 +14,14 @@
     -moz-animation: fadeIn ease 10s;
     -o-animation: fadeIn ease 10s;
     -ms-animation: fadeIn ease 10s;
+
+    max-width: 900px;
+    margin: auto;
 }
 
-.Bruh h1 {
+.TextBox h1 {
     position: static;
-    color: rgb(255, 255, 255);
+    color: var(--primary);
     font-family: 'Helvetica Neue', sans-serif; 
     font-size: 17vw; 
     
@@ -36,9 +39,8 @@
 
 @media (min-width: 1200px) {
 
-    .Bruh h1 {
+    .TextBox h1 {
         font-size: 10rem;
-        padding: 0 30vw;
     }
 
 }
