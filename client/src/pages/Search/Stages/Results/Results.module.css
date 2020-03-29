@@ -1,0 +1,26 @@
+.Main {
+    width: 90vw;
+    max-width: 450px;
+
+    margin: 10vh auto;
+}
+
+.Main img {
+    width: 100%;
+}
+
+.HashtagList {
+    /* text-align: center; */
+    list-style: none;
+}
+
+.HashtagList li {
+    position: relative;
+    margin: 5px 0;
+}
+
+.HashtagList li span {
+    position: absolute;
+    right: 120%;
+    top: 0;
+}

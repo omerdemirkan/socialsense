@@ -28,19 +28,21 @@ app.get('/rank_images', (req, res) => {
     console.log('ranking images', '\n-----------------');
 
     setTimeout(() => {
-        res.json({
+        const response = {
             scores: files.map(file => {
                 return{
                     id: file.id, 
                     score: file.score
                 }
             })
-        });
+        }
+        console.log(response);
+        res.json(response);
     }, 2000);
     
 })
 
-app.get('/rank_hashtags', (req, res) => {
+app.post('/rank_hashtags', (req, res) => {
     console.log('retrieving hashtags', '\n-----------------');
 
     setTimeout(() => {

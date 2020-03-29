@@ -18,7 +18,7 @@ export default function ImageSelection(props) {
         <ul className={classes.ImagesList}>
 
             {props.files.map(file => {
-
+                console.log(file)
                 delay += .05;
                 return <li 
                 className='fade-in-on-load' 
@@ -34,6 +34,7 @@ export default function ImageSelection(props) {
                     <img 
                     src={file.src}/>
 
+                    
                     <button
                     className='primary-button large full-width'
                     style={{margin: '0'}}
