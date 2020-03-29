@@ -56,6 +56,8 @@ def rank_hashtags():
     username = req_body['username']
     id = req_body['id']
 
+    if id not in images: return '', 404
+
     # getting scraping account info from environment vars
     IGData.login = os.environ['IGLOGIN']
     IGData.password = os.environ['IGPASS']
