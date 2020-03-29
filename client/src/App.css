@@ -1,10 +1,21 @@
+
 :root {
-  --background: rgb(37, 37, 37);
+  --background: rgb(255, 255, 255);
   --background-alt: rgb(248, 248, 248);
   --accent: #CC00FF;
   --accent-alt: rgb(190, 0, 238);
-  --primary: #ffffff;
+  --primary: #303030;
   --primary-alt: #3f3f3f;
+  --medium: #b9b9b9;
+}
+
+.dark-mode {
+  --background: rgb(37, 37, 37);
+  --background-alt: rgb(49, 49, 49);
+  --accent: #CC00FF;
+  --accent-alt: rgb(190, 0, 238);
+  --primary: #ffffff;
+  --primary-alt: #f1f1f1;
   --medium: #b9b9b9;
 }
 
