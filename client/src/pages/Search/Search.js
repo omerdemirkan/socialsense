@@ -57,6 +57,8 @@ function Search(props) {
         case 4:
             stage = <Results
             loading={props.hashtagsLoading}
+            hashtags={props.hashtags}
+            file={props.hashtagFile}
             />
     }
 
@@ -78,7 +80,9 @@ const mapStateToProps = state => {
         rankImagesLoading: state.search.rankImagesLoading,
         imagesAreRanked: state.search.imagesAreRanked,
 
-        hashtagsLoading: state.hashtags.loading
+        hashtagsLoading: state.hashtags.loading,
+        hashtags: state.hashtags.hashtags,
+        hashtagFile: state.hashtags.file
     }
 }
 
@@ -89,7 +93,7 @@ const mapDispatchToProps = dispatch => {
         onAddFile: file => dispatch(addFile(file)),
         onDeleteFileById: id => dispatch(deleteFileById(id)),
         onFetchRankings: () => dispatch(fetchRankingsAsync()),
-        onFetchHashtags: (file, username) => dispatch(fetchHashtagsAsync(username, file))
+        onFetchHashtags: (username, file) => dispatch(fetchHashtagsAsync(username, file))
     }
 }
 
