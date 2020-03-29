@@ -19,6 +19,12 @@ export default function(state = initialState, action) {
                 loading: false,
                 hashtags: action.hashtags
             }
+        case actionTypes.SET_HASHTAGS:
+            return {
+                ...state,
+                hashtags: action.hashtags
+            }
+
         default:
             return state
     }

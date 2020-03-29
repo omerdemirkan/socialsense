@@ -1,35 +1,35 @@
 import React from 'react';
 import classes from './Hashtag.module.css';
 
-export default function Hashtag({text, score, inspected, onInspect, onCloseInspect}) {
+export default function Hashtag(props) {
     return <div 
     className={classes.Hashtag + ' fade-in-on-load'} 
-    style={!inspected ? {height: '20px', transition: 'height 0.2s ease'}: null}>
+    style={!props.inspected ? {height: '20px', transition: 'height 0.2s ease'}: null}>
         <p className={classes.Text}>
             <span 
-            style={inspected ? {color: 'var(--accent)'} : null}
+            style={props.inspected ? {color: 'var(--accent)'} : null}
             >@</span>
-            {text}
+            {props.text}
         </p>
 
         <span className={classes.ToggleBox}
-        onClick={!inspected ? onInspect : onCloseInspect}>
+        onClick={!props.inspected ? props.onInspect : props.onCloseInspect}>
             <div 
             className={classes.ToggleSlab1}
-            style={inspected ? {width: '26px'} : null}></div>
+            style={props.inspected ? {width: '26px'} : null}></div>
             <div 
             className={classes.ToggleSlab2}
-            style={inspected ? {width: '26px'} : null}></div>
+            style={props.inspected ? {width: '26px'} : null}></div>
         </span>
 
         <hr/>
 
         <div className={classes.DataBox}>
-            <span>Score: {score}</span>
+            <span>Score: {props.score}</span>
 
             <button 
             className='primary-button'
-            >Delete</button>
+            onClick={props.delete}>Delete</button>
         </div>
     </div>
 }

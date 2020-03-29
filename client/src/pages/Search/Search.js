@@ -15,7 +15,8 @@ import {
     addFile,
     deleteFileById,
     fetchRankingsAsync,
-    fetchHashtagsAsync
+    fetchHashtagsAsync,
+    setHashtags
 } from '../../store/actions/index';
 
 function Search(props) {
@@ -59,6 +60,7 @@ function Search(props) {
             loading={props.hashtagsLoading}
             hashtags={props.hashtags}
             file={props.hashtagFile}
+            setHashtags={props.onSetHashtags}
             />
     }
 
@@ -93,7 +95,11 @@ const mapDispatchToProps = dispatch => {
         onAddFile: file => dispatch(addFile(file)),
         onDeleteFileById: id => dispatch(deleteFileById(id)),
         onFetchRankings: () => dispatch(fetchRankingsAsync()),
-        onFetchHashtags: (username, file) => dispatch(fetchHashtagsAsync(username, file))
+        onFetchHashtags: (username, file) => dispatch(fetchHashtagsAsync(username, file)),
+        onSetHashtags: hashtags => {
+            console.log(hashtags)
+            dispatch(setHashtags(hashtags))
+        }
     }
 }
 

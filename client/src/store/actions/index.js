@@ -18,3 +18,7 @@ export function addFile(file) {
 export function deleteFileById(id) {
     return { type: actionTypes.DELETE_FILE, id }
 }
+
+export function setHashtags(hashtags) {
+    return {type: actionTypes.SET_HASHTAGS, hashtags}
+}

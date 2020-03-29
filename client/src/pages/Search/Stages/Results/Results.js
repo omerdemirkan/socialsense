@@ -9,6 +9,13 @@ export default function Results(props) {
 
     const [inspectedHashtag, setInspectedHashtag] = useState('');
 
+    function deleteHashtag(hashtag) {
+        const newHashtags = props.hashtags.filter(hashtagObject => {
+            return Object.keys(hashtagObject)[0] !== hashtag
+        })
+        props.setHashtags(newHashtags)
+    }
+
     if (props.loading || props.hashtags.length === 0) {
         return <div className='loader-box'>
             <CircularProgress />
@@ -19,8 +26,6 @@ export default function Results(props) {
             
         </div>
     }
-
-    console.log(inspectedHashtag)
     
     return <div className=' fade-in-on-load'>
         <div className={classes.Main}>
@@ -37,7 +42,8 @@ export default function Results(props) {
                         score={score}
                         inspected={text === inspectedHashtag}
                         onInspect={() => setInspectedHashtag(text)}
-                        onCloseInspect={() => setInspectedHashtag('')}/>
+                        onCloseInspect={() => setInspectedHashtag('')}
+                        delete={() => deleteHashtag(text)}/>
                     </li>
                 })}
             </ul>
