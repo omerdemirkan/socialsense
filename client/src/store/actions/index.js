@@ -22,3 +22,7 @@ export function deleteFileById(id) {
 export function setHashtags(hashtags) {
     return {type: actionTypes.SET_HASHTAGS, hashtags}
 }
+
+export function setProfileImageSrc(src) {
+    return {type: actionTypes.SET_PROFILE_IMAGE_SRC, src}
+}

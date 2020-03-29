@@ -16,7 +16,8 @@ import {
     deleteFileById,
     fetchRankingsAsync,
     fetchHashtagsAsync,
-    setHashtags
+    setHashtags,
+    setProfileImageSrc
 } from '../../store/actions/index';
 
 function Search(props) {
@@ -33,7 +34,10 @@ function Search(props) {
             stage = <UsernameInput
             username={props.username}
             updateUsername={props.onUpdateUsername}
-            nextStage={() => props.onUpdateStage(2)}
+            nextStage={() => {
+                props.onUpdateStage(2)
+
+            }}
             />
             break;
         case 2:
@@ -99,7 +103,8 @@ const mapDispatchToProps = dispatch => {
         onSetHashtags: hashtags => {
             // console.log(hashtags)
             dispatch(setHashtags(hashtags))
-        }
+        },
+        onSetProfileImageSrc: src => dispatch(setProfileImageSrc(src))
     }
 }
 

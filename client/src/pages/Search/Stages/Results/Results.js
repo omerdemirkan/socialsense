@@ -1,6 +1,8 @@
 import React, { useState }  from 'react';
 import classes from './Results.module.css';
 
+import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
@@ -35,6 +37,7 @@ export default function Results(props) {
     }
     
     return <div className=' fade-in-on-load'>
+        <ScrollUpOnMount/>
         <div className={classes.Main}>
             <img
             src={props.file.src}

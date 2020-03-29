@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import classes from './FilesSelection.module.css';
 
+import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
+
 // axios
 import axios from '../../../../axios';
 
@@ -70,6 +72,7 @@ export default function FilesSelection(props) {
     console.log(props.files);
 
     return <div className='fade-in-on-load'>
+        <ScrollUpOnMount/>  
         <h2 className='page-header'>
             What Images Are You Considering?
         </h2>

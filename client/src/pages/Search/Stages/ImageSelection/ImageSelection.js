@@ -1,6 +1,8 @@
 import React from 'react';
 import classes from './ImageSelection.module.css';
 
+import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function ImageSelection(props) {
@@ -13,6 +15,7 @@ export default function ImageSelection(props) {
 
     let delay = 0;
     return <div className={classes.ImageSelection + ' fade-in-on-load'}>
+        <ScrollUpOnMount/>
         <h2 className='page-header'>Ranked from highest to lowest expected engagement</h2>
         <ul className={classes.ImagesList}>
 

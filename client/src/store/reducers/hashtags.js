@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     hashtags: [],
     file: null,
-    loading: false
+    loading: false,
+    profileImageSrc: null
 }
 
 export default function(state = initialState, action) {
@@ -23,6 +24,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 hashtags: action.hashtags
+            }
+        case actionTypes.SET_PROFILE_IMAGE_SRC:
+            return {
+                ...state,
+                profileImageSrc: action.src
             }
 
         default:

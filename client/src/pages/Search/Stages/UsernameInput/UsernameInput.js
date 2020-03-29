@@ -1,11 +1,14 @@
 import React from 'react';
 import classes from './UsernameInput.module.css';
 
+import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
+
 // Material UI
 import Input from '@material-ui/core/Input';
 
 export default function UsernameInput(props) {
     return <div className='fade-in-on-load'>
+        <ScrollUpOnMount/>
 
         <h2 className='page-header'>
             What Is Your Instagram Handle?
