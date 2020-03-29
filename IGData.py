@@ -62,15 +62,14 @@ def rank_tags(username, image, total=100, num_starting=30):
 
     seen_tags = _scrape(starting_tags, _scrape_post_engagement, total)
 
-    if debug: 
-        print('Ranking hashtags')
-        start = datetime.now()
+    if debug: start = datetime.now()
 
     tag_scores = {}
     for tag in seen_tags:
         # skip failed tags
         if seen_tags[tag] is None:
             continue
+        if debug: print(f'Currently ranking: {tag}')
         weighted_diffs = []
         for post in seen_tags[tag]:
             # skip failed posts
