@@ -4,6 +4,7 @@ import classes from './Results.module.css';
 import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import loadingGif from '../../../../images/gifs/loading.gif'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Hashtag from '../../../../components/Hashtag/Hashtag';
@@ -27,9 +28,12 @@ export default function Results(props) {
 
     if (props.loading || props.hashtags.length === 0) {
         return <div className='loader-box'>
-            <CircularProgress />
+            <img 
+            src={loadingGif}
+            style={{width: '150px'}}/>
+            {/* <CircularProgress /> */}
             <div>
-                <h1>socialsense is thinking</h1>
+                <h1>socialsense.ai is thinking</h1>
                 <h3>Beep Beep Boop</h3>
             </div>
             

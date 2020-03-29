@@ -4,12 +4,16 @@ import classes from './ImageSelection.module.css';
 import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import loadingGif from '../../../../images/gifs/loading.gif';
 
 export default function ImageSelection(props) {
 
     if (props.loading || !props.imagesAreRanked) {
         return <div className='loader-box'>
-            <CircularProgress />
+            <img 
+            src={loadingGif}
+            style={{width: '150px'}}/>
+            {/* <CircularProgress /> */}
         </div>
     }
 
