@@ -41,7 +41,7 @@ export default function ImageSelection(props) {
                     <span
                     style={{float: 'right', margin: '0 10px'}}
                     >
-                        Score: {file.score.toFixed(3)}
+                        Popularity Score: {file.score.toFixed(3)}
                     </span>
 
                     <img 

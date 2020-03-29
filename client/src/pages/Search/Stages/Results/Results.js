@@ -77,8 +77,8 @@ export default function Results(props) {
 
             <div className={classes.EngagementBox}>
                 <FavoriteRoundedIcon fontSize='large'/>
-                <span>
-                    <span className='accented-text' style={{fontSize: '1.1rem', fontWeight: '700'}}>{props.engagement}</span> (Expected Engagement)
+                <span style={{fontStyle: 'italic', color: 'var(--medium)'}}>
+                    <span className='accented-text' style={{fontSize: '1.1rem', fontWeight: '700', fontStyle: 'normal', marginRight: '20px', color: 'var(--primary)'}}>{Math.round(props.engagement)}</span> Expected Engagement
                 </span>
             </div>
 
