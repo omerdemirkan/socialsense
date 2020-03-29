@@ -14,6 +14,7 @@ export default function UsernameInput(props) {
         <div className='form-box'>
             <div className={classes.InputWrapper}>
                 <Input type='text'
+                style = {{color: "var(--primary)", fontWeight: "bold"}}
                 value={props.username}
                 onChange={e => props.updateUsername(e.target.value)}
                 className={classes.Input}
