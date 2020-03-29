@@ -1,3 +1,10 @@
+.Home {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; */
+}
+
 .TextBox {
     position: static;
     color: var(--primary);
@@ -15,7 +22,7 @@
     -o-animation: fadeIn ease 10s;
     -ms-animation: fadeIn ease 10s;
 
-    max-width: 900px;
+    max-width: 600px;
     margin: auto;
 }
 
@@ -24,6 +31,7 @@
     color: var(--primary);
     font-family: 'Helvetica Neue', sans-serif; 
     font-size: 17vw; 
+    margin: 0;
     
     font-weight: bold; 
     height: 100%;
@@ -37,10 +45,38 @@
     -ms-animation: fadeIn ease 10s;
 }
 
+.CTAbox {
+    width: 90vw;
+    margin: auto;
+    max-width: 500px;   
+    text-align: center;
+    margin-top: 6vh;
+
+    opacity: 0;
+    animation: FadeIn 0.5s ease forwards;
+    animation-delay: 2.8s;
+}
+
+.CTAbox button {
+
+    opacity: 0;
+    animation: FadeIn 0.5s ease forwards;
+    animation-delay: 3s;
+}
+
 @media (min-width: 1200px) {
 
     .TextBox h1 {
-        font-size: 11rem;
+        font-size: 8rem;
     }
 
+}
+
+@keyframes FadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
