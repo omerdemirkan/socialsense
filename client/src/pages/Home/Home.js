@@ -1,9 +1,11 @@
 import React from 'react'
-import classes from './Home.module.css';
+import './Home.module.css';
 
-export default function Home() {
-    return <div>
-        
-    </div>
-    
+function Home() {
+    return (
+    <div className = "bruh">
+        <h1 className = "big-text">Discover your audience</h1>
+    </div>  
+    )
 }
+export default Home

@@ -4,7 +4,7 @@
     position: fixed;
     top: 0;
     left: 0;
-
+   background-color: rgb(26, 26, 27);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,6 +17,7 @@
     top: 35px;
     left: 10vw;
     font-size: 1.5rem;
+    color: rgb(234, 228, 255);
 }
 
 .LogoIcon {
@@ -40,6 +41,7 @@
     width: 400px;
     display: flex;
     justify-content: space-evenly;
+    color: rgb(239, 255, 255);
 }
 
 .NavList li {
