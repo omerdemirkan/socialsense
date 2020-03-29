@@ -5,7 +5,9 @@ export default function Hashtag(props) {
     return <div 
     className={classes.Hashtag + ' fade-in-on-load'} 
     style={!props.inspected ? {height: '20px', transition: 'height 0.2s ease'}: null}>
-        <p className={classes.Text}>
+        <p 
+        className={classes.Text}
+        onClick={!props.inspected ? props.onInspect : props.onCloseInspect}>
             <span 
             style={props.inspected ? {color: 'var(--accent)'} : null}
             >@</span>

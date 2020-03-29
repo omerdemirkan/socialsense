@@ -2,6 +2,7 @@ import React, { useState }  from 'react';
 import classes from './Results.module.css';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Hashtag from '../../../../components/Hashtag/Hashtag';
 
@@ -26,6 +27,8 @@ export default function Results(props) {
             
         </div>
     }
+
+    console.log(Object.keys(props.hashtags));
     
     return <div className=' fade-in-on-load'>
         <div className={classes.Main}>
@@ -47,7 +50,17 @@ export default function Results(props) {
                     </li>
                 })}
             </ul>
-            
+            <CopyToClipboard text={
+                '@' + 
+                props.hashtags.map(
+                hashtag => Object.keys(hashtag)[0])
+                .join(' @')
+            }
+            onCopy={() => {}}>
+
+                <button className='primary-button large full-width'>Copy To Clipboard</button>
+            </CopyToClipboard>
+
         </div>
     </div>
 }

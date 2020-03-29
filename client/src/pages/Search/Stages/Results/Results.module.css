@@ -18,7 +18,6 @@
 .HashtagList li {
     position: relative;
     margin: 8px 0;
-    cursor: pointer;
     background-color: var(--background-alt);
     border-radius: 3px;
 }

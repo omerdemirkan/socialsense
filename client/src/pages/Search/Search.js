@@ -97,7 +97,7 @@ const mapDispatchToProps = dispatch => {
         onFetchRankings: () => dispatch(fetchRankingsAsync()),
         onFetchHashtags: (username, file) => dispatch(fetchHashtagsAsync(username, file)),
         onSetHashtags: hashtags => {
-            console.log(hashtags)
+            // console.log(hashtags)
             dispatch(setHashtags(hashtags))
         }
     }
