@@ -8,8 +8,12 @@ import { NavLink } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import logo2 from '../../images/logo-2.svg';
 
+//Redux
+import { connect } from 'react-redux'
+import { toggleTheme } from '../../store/actions/index'
 
-export default function Navbar() {
+
+function Navbar(props) {
     
     const [splashScreenClosed, setSplashScreenClosed] = useState(false);
 
@@ -60,13 +64,13 @@ export default function Navbar() {
             </NavLink>
         </span>
 
-        <span className={classes.LogoIcon}>
-            <NavLink to='/'>
+        <span 
+        className={classes.LogoIcon}
+        onClick={props.onToggleTheme}>
                 <img 
                 src={logo2}
                 style={splashScreenClosed ? {height: '70px', transition: 'height 0.2s ease'}: null}
                 />
-            </NavLink>
         </span>
 
         <ul 
@@ -96,3 +100,17 @@ export default function Navbar() {
         </ul>
     </div>
 }
+
+const mapStateToProps = state => {
+    return {
+        darkMode: state.theme.darkMode
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onToggleTheme: () => dispatch(toggleTheme())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

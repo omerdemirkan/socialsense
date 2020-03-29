@@ -14,9 +14,10 @@ import Home from './pages/Home/Home';
 // Components
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import { connect } from 'react-redux';
 
-function App() {
-  return <div className="App dark-mode">
+function App(props) {
+  return <div className={`App ${props.darkMode ? 'dark-mode' : null}`}>
     <Navbar/>
     <div 
     className='page-wrapper fade-in-on-load'
@@ -34,4 +35,10 @@ function App() {
   </div>
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    darkMode: state.theme.darkMode
+  }
+}
+
+export default connect(mapStateToProps)(App);

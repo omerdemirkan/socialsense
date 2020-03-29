@@ -26,3 +26,7 @@ export function setHashtags(hashtags) {
 export function setProfileImageSrc(src) {
     return {type: actionTypes.SET_PROFILE_IMAGE_SRC, src}
 }
+
+export function toggleTheme() {
+    return {type: actionTypes.TOGGLE_THEME}
+}

@@ -6,6 +6,7 @@
     background-color: var(--background-alt);
     padding-top: 10px;
     text-align: center;
+    transition: background-color .3s ease;
 }
 
 .Footer h3 {

@@ -25,6 +25,7 @@
   color: var(--primary);
   font-family: 'Nunito', sans-serif;
   overflow-x: hidden;
+  transition: background-color .3s ease;
 }
 
 a {

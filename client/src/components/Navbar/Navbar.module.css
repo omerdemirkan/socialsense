@@ -27,11 +27,14 @@
 .LogoIcon {
     font-size: 2rem;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .LogoIcon img {
     height: 200px;
     transform: translateY(6px);
+    cursor: pointer;
+    z-index: 12;
 }
 
 .NavList {

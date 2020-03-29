@@ -30,14 +30,15 @@ function Search(props) {
     }
 
     function fetchProfileImageSrc() {
-        axios.get(`https://www.instagram.com/${props.username}/?__a=1`)
-        .then(res => {
-            const src = res.data.graphql.user.profile_pic_url_hd;
-            console.log(src);
-            props.onSetProfileImageSrc(src)
+        // axios.get(`https://www.instagram.com/${props.username}/?__a=1`)
+        // .then(res => {
+        //     const src = res.data.graphql.user.profile_pic_url;
+        //     console.log(src);
+        //     props.onSetProfileImageSrc(src)
 
-        })
+        // })
 
+        props.onSetProfileImageSrc('https://instagram.fhyd1-2.fna.fbcdn.net/v/t51.2885-19/44884218_345707102882519_2446069589734326272_n.jpg?_nc_ht=instagram.fhyd1-2.fna.fbcdn.net&_nc_ohc=BPpspOIm5WgAX_DwIQk&oh=c3a6c429848f5ebea92110acd17c6472&oe=5EA8E30F&ig_cache_key=YW5vbnltb3VzX3Byb2ZpbGVfcGlj.2')
     }
 
     let stage = null;
