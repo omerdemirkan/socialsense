@@ -57,58 +57,80 @@ class Data(Dataset):
     def __init__(self, data):
         # Initialize
         self.transform = transforms.Compose([transforms.RandomHorizontalFlip(), transforms.RandomRotation(
-            15, expand=True), transforms.Resize((128, 128)), transforms.ToTensor()])
+            10, expand=True), transforms.Resize((128, 128)), transforms.ToTensor()])
 
         self.data = data
-        self.keys = list(self.data.keys())
 
         self.len = len(self.data)
 
     def __getitem__(self, index):
         # Return sample
-        key = self.keys[index]
+        posts = self.data.copy()
 
-        x1 = random.choice(self.data[key])
-        try:
-            x1 = requests.get(x1).content
-            x1 = Image.open(io.BytesIO(x1))
-            x1 = self.transform(x1)
-
-        except Exception:
-            print(key, self.data[key])
-            print(x1)
+        x1 = random.choice(posts)
+        focus = posts.index(x1)
+        posts.pop(focus)
 
         choice = random.random()
 
-        if choice > 0.5:
-            x2 = random.choice(self.data[key])
-            try:
-                x2 = requests.get(x2).content
-                x2 = Image.open(io.BytesIO(x2))
-                x2 = self.transform(x2)
+        if choice < 0.28:
+            x2 = random.choice(posts)
 
-            except Exception:
-                print(key, self.data[key])
-                print(x2)
+        elif choice > 0.28:
+            x2 = random.choice(posts[max(focus - 3, 0):min(focus + 3, len(posts))])
 
+        same = 0
+
+        for tag1 in x1["tags"]:
+            for tag2 in x2["tags"]:
+                if tag1 == tag2:
+                    same += 1
+
+        if same > 0:
             y = torch.tensor([1.0])
 
-        elif choice < 0.5:
-            different_key = self.keys.copy()
-            different_key.pop(index)
-            different_key = random.choice(different_key)
-
-            x2 = random.choice(self.data[different_key])
-            try:
-                x2 = requests.get(x2).content
-                x2 = Image.open(io.BytesIO(x2))
-                x2 = self.transform(x2)
-
-            except Exception:
-                print(key, self.data[different_key])
-                print(x2)
-
+        else:
             y = torch.tensor([0.0])
+
+        x1 = requests.get(x1["image"]).content
+        x1 = Image.open(io.BytesIO(x1))
+        x1 = self.transform(x1)
+
+        x2 = requests.get(x2["image"]).content
+        x2 = Image.open(io.BytesIO(x2))
+        x2 = self.transform(x2)
+
+        # key = self.keys[index]
+        #
+        # tag = self.data[key]
+        #
+        # x1 = random.choice(tag)
+        # tag.pop(tag.index(x1))
+        # x1 = requests.get(x1).content
+        # x1 = Image.open(io.BytesIO(x1))
+        # x1 = self.transform(x1)
+        #
+        # choice = random.random()
+        #
+        # if choice > 0.5:
+        #     x2 = random.choice(self.data[key])
+        #     x2 = requests.get(x2).content
+        #     x2 = Image.open(io.BytesIO(x2))
+        #     x2 = self.transform(x2)
+        #
+        #     y = torch.tensor([1.0])
+        #
+        # elif choice < 0.5:
+        #     different_key = self.keys.copy()
+        #     different_key.pop(index)
+        #     different_key = random.choice(different_key)
+        #
+        #     x2 = random.choice(self.data[different_key])
+        #     x2 = requests.get(x2).content
+        #     x2 = Image.open(io.BytesIO(x2))
+        #     x2 = self.transform(x2)
+        #
+        #     y = torch.tensor([0.0])
 
         x = [x1.requires_grad_(), x2.requires_grad_()]
 
@@ -127,13 +149,16 @@ class Model():
 
         if os.path.exists("dataset.json"):
             with open("dataset.json", "rb") as file:
-                data = json.load(file)
+                data = json.load(file)["posts"]
+                data = {"train": data[:int(len(data) * 0.7)], "eval": data[int(len(data) * 0.7):]}
 
-            self.dataset = Data(data)
-            self.loader = DataLoader(self.dataset, batch_size=25, shuffle=True)
+                self.dataset = {phase: Data(data[phase]) for phase in ["train", "eval"]}
+                self.loader = {phase: DataLoader(self.dataset[phase], batch_size=25, shuffle=True) for phase in [
+                    "train", "eval"]}
 
         self.epochs = 10
         self.learning_rate = 0.001
+        self.analyze = True
 
         self.model = NN().to(self.device)
 
@@ -152,29 +177,46 @@ class Model():
 
         running_loss = []
         running_accuracy = []
+        balance = [[], []]
 
         for epoch in range(self.epochs):
-            for index, data in enumerate(self.loader):
-                x_train = [x.to(self.device) for x in data[0]]
-                y_train = data[1].to(self.device)
+            for phase in ["train", "eval"]:
+                if phase == "train" or not self.analyze:
+                    self.model.train()
 
-                y_pred = self.model(x_train)
-                loss = self.criterion(y_pred, y_train)
+                else:
+                    self.model.eval()
 
-                self.optimizer.zero_grad()
-                loss.backward()
-                self.optimizer.step()
+                if self.analyze:
+                    running_loss = []
+                    running_accuracy = []
 
-                running_loss.append(loss.item())
-                running_accuracy.append(
-                    1 if abs(y_pred[0].item() - y_train[0].item()) <= 0.5 else 0)
+                for index, data in enumerate(self.loader[phase]):
+                    x_train = [image.to(self.device) for image in data[0]]
+                    y_train = data[1].to(self.device)
 
-                if index % 50 == 0:
-                    print(
-                        f"step: {index}, loss: {np.array(running_loss).mean()}, accuracy: {np.array(running_accuracy).mean()}")
+                    balance[0].append(list(y_train).count(1))
+                    balance[1].append(list(y_train).count(0))
 
-            print(
-                f"epoch: {epoch}, loss: {np.array(running_loss).mean()}, accuracy: {np.array(running_accuracy).mean()}")
+                    with torch.set_grad_enabled(phase == "train" or not self.analyze):
+                        y_pred = self.model(x_train)
+                        loss = self.criterion(y_pred, y_train)
+
+                        if phase == "train" or not self.analyze:
+                            self.optimizer.zero_grad()
+                            loss.backward()
+                            self.optimizer.step()
+
+                    running_loss.append(loss.item())
+                    running_accuracy.append(
+                        1 if abs(y_pred[0].item() - y_train[0].item()) <= 0.5 else 0)
+
+                    if index % 25 == 0:
+                        print(
+                            f"{phase} | step: {index}, loss: {np.array(running_loss).mean()}, accuracy: {np.array(running_accuracy).mean()}, 1: {np.array(balance[0]).mean()}, 0: {np.array(balance[1]).mean()}")
+
+                print(
+                    f"{phase} | epoch: {epoch}, loss: {np.array(running_loss).mean()}, accuracy: {np.array(running_accuracy).mean()}, 1: {np.array(balance[0]).mean()}, 0: {np.array(balance[1]).mean()}")
 
             print()
 
@@ -199,10 +241,18 @@ class Model():
 
 if __name__ == "__main__":
     model = Model("color-10-128.model")
-    # model.train()
-    file1 = open("test/meme1", "rb")
+    model.train()
+    file1 = open("test/meme1.png", "rb")
     im1 = Image.open(file1)
-    file2 = open("test/meme2", "rb")
+    file2 = open("test/meme2.png", "rb")
+    im2 = Image.open(file2)
+    print(model.predict(im1, im2))
+    file1.close()
+    file2.close()
+
+    file1 = open("test/mountain1.png", "rb")
+    im1 = Image.open(file1)
+    file2 = open("test/mountains2.png", "rb")
     im2 = Image.open(file2)
     print(model.predict(im1, im2))
     file1.close()

@@ -13,30 +13,31 @@ refined_dataset = []
 for index, post in enumerate(tqdm(dataset)):
     r = requests.get(post["image"])
 
-    if r.status_code == 200:
+    if r.status_code == 200 and len(post["tags"]) > 1:
         refined_dataset.append(dataset[index])
 
-dataset = refined_dataset.copy()
-
-print(len(dataset))
-
-data = {}
-
-for post in tqdm(dataset):
-    for tag in post["tags"]:
-        if tag not in data:
-            data.update({tag: [post["image"]]})
-
-        elif tag in data:
-            data.update({tag: data[tag] + [post["image"]]})
-
-print(len(data))
-
-for tag in data.copy().keys():
-    if len(data[tag]) <= 1:
-        data.pop(tag)
-
-print(len(data))
+dataset = {"posts": refined_dataset.copy()}
 
 with open("dataset.json", "w") as file:
-    json.dump(data, file)
+    json.dump(dataset, file)
+
+# data = {}
+#
+# for post in tqdm(dataset):
+#     for tag in post["tags"]:
+#         if tag not in data:
+#             data.update({tag: [post["image"]]})
+#
+#         elif tag in data:
+#             data.update({tag: data[tag] + [post["image"]]})
+#
+# print(len(data))
+#
+# for tag in data.copy().keys():
+#     if len(data[tag]) <= 1:
+#         data.pop(tag)
+#
+# print(len(data))
+#
+# with open("dataset.json", "w") as file:
+#     json.dump(data, file)
