@@ -54,7 +54,11 @@ def rank_tags(username, image, total=100, num_starting=30):
     if len(drivers) == 0:
         initialize_drivers()
 
-    seen_tags = _scrape(_get_user_tags(username, num_starting), _scrape_post_engagement, total)
+    starting_tags = _get_user_tags(username, num_starting)
+    if len(starting_tags) == 0:
+        starting_tags = top_100_tags[:num_starting]
+        
+    seen_tags = _scrape(starting_tags, _scrape_post_engagement, total)
 
     print('Scoring hashtags')
     tag_scores = {}

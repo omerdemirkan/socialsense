@@ -13,7 +13,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 app = Flask(__name__)
 CORS(app)
-IGData.initialize_drivers()
+#IGData.initialize_drivers()
 images = {}
 """Base64 encoded strings of images the user wants to predict popularity for. Key is a unique id."""
 
@@ -27,14 +27,15 @@ def add_image():
     return '', 204
 
 
-@app.route('/delete_image', methods=['DELETE'])
+@app.route('/delete_image', methods=['POST'])
 def delete_image():
     req_body = request.get_json(force=True)
     id = req_body['id']
-    images.pop(id, None)
 
-    return '', 204
-
+    if id in images:
+        images.pop(id)
+        return '', 204
+    return '', 404
 
 @app.route('/rank_images', methods=['GET'])
 def rank_images():
