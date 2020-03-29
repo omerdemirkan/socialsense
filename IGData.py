@@ -1,10 +1,15 @@
 import json
 import re
 import os
+import io
 import traceback
-from random import random
+import requests
+from random import shuffle
 from collections import deque
 from multiprocessing import Pool
+from datetime import datetime
+from model import model
+from PIL import Image
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,13 +18,13 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
 login, password = None, None
+visible, debug = False, True
 pool_size = 8
-visible = False
 drivers = []
 
 top_100_tags = ['love', 'instagood', 'photooftheday', 'fashion', 'Beautiful', 'like4like', 'picoftheday', 'art', 'happy', 'photography', 'instagram', 'followme', 'style', 'follow', 'instadaily', 'travel', 'life', 'cute', 'fitness', 'nature', 'beauty', 'girl', 'fun', 'photo', 'amazing', 'likeforlike', 'instalike', 'Selfie', 'smile', 'me', 'lifestyle', 'model', 'follow4follow', 'music', 'friends', 'motivation', 'like', 'food', 'inspiration', 'Repost', 'summer', 'design', 'makeup', 'TBT', 'followforfollow', 'ootd', 'Family', 'l4l', 'cool', 'igers', 'TagsForLikes', 'hair', 'instamood', 'sun', 'vsco', 'fit', 'beach', 'photographer', 'gym', 'artist', 'girls', 'vscocam', 'autumn', 'pretty', 'luxury', 'instapic', 'black', 'sunset', 'funny', 'sky', 'blogger', 'hot', 'healthy', 'work', 'bestoftheday', 'workout', 'f4f', 'nofilter', 'london', 'goals', 'blackandwhite', 'blue', 'swag', 'health', 'party', 'night', 'landscape', 'nyc', 'happiness', 'pink', 'lol', 'foodporn', 'newyork', 'fitfam', 'awesome', 'fashionblogger', 'Halloween', 'Home', 'fall', 'paris']
 """top 100 hashtags from https://www.all-hashtag.com/top-hashtags.php, used as a starting point
-for create_dataset
+for create_dataset and when user has no previous hashtags
 """
 
 def create_dataset(total=100, output_path='dataset.json'):
@@ -50,7 +55,16 @@ def rank_tags(username, image, total=100, num_starting=30):
     if len(drivers) == 0:
         initialize_drivers()
 
-    seen_tags = _scrape(_get_user_tags(username, num_starting), _scrape_post_engagement, total)
+    starting_tags = _get_user_tags(username, num_starting)
+    if len(starting_tags) == 0:
+        shuffle(top_100_tags)
+        starting_tags = top_100_tags[:num_starting]
+
+    seen_tags = _scrape(starting_tags, _scrape_post_engagement, total)
+
+    if debug: 
+        print('Ranking hashtags')
+        start = datetime.now()
 
     tag_scores = {}
     for tag in seen_tags:
@@ -66,12 +80,16 @@ def rank_tags(username, image, total=100, num_starting=30):
             weighted_diffs.append(_similarity(image, img_link) * engagement_diff)
         tag_scores[tag] = sum(weighted_diffs) / len(weighted_diffs)
 
-    return tag_scores
+    if debug: print(f'Time to rank: {datetime.now() - start}')
+    
+    engagement_rate, follow_count = _get_user_engagement(username)
+    
+    return tag_scores, engagement_rate, follow_count
 
 
 def initialize_drivers():
     """Initialize selenium webdrivers. Calling beforehand can save time later."""
-    print('Initializing webdrivers for scraping')
+    if debug: print('Initializing webdrivers for scraping')
     global drivers
     driver_options = Options()
     if not visible:
@@ -85,12 +103,14 @@ def quit_drivers():
 
 
 def _scrape(starting_tags, post_scraper, total):
+    if debug: start = datetime.now()
+
     tag_Q = deque(starting_tags)
     seen_tags = dict.fromkeys(tag_Q)
 
     while len(tag_Q) > 0:
         curr_tags = [tag_Q.popleft() for _ in range(min(pool_size, len(tag_Q)))]
-        print(f'Currently scraping: {curr_tags}')
+        if debug: print(f'Currently scraping: {curr_tags}')
 
         pool = Pool(len(curr_tags))
         args = [[curr_tags[i], post_scraper, i] for i in range(len(curr_tags))]
@@ -113,6 +133,7 @@ def _scrape(starting_tags, post_scraper, total):
                     tag_Q.append(tag)
                     seen_tags[tag] = None
 
+    if debug: print(f'Time to scrape: {datetime.now() - start}')
     return seen_tags
 
 
@@ -120,6 +141,7 @@ def _get_user_tags(username, num_tags=15, driver_index=0):
     driver = drivers[driver_index]
     user_json = _get_user(username, driver)
     user_posts = user_json['graphql']['user']['edge_owner_to_timeline_media']['edges']
+    follow_count = user_json['graphql']['user']['edge_followed_by']['count']
 
     user_tags = set()
     for post in user_posts:
@@ -133,7 +155,6 @@ def _get_user_tags(username, num_tags=15, driver_index=0):
                 return user_tags
 
     return user_tags
-
 
 def _get_user(username, driver):
     driver.get(f'https://www.instagram.com/{username}/?__a=1')
@@ -180,9 +201,10 @@ def _scrape_tag(tag, post_scraper, driver_index, num_related=5):
         image_data = [post_scraper(post, driver) for post in posts]
         return image_data, related_tags
     except Exception:
-        print(f'Could not get top posts for {tag}')
-        print(driver.page_source[:500])
-        print(traceback.format_exc())
+        if debug:
+            print(f'Could not get top posts for {tag}')
+            print(driver.page_source[:500])
+            print(traceback.format_exc())
 
 
 def _scrape_post_engagement(post, driver):
@@ -249,5 +271,24 @@ def _get_engagement_diff(username, post_like_count, driver, num_posts=10):
     # TODO: perhaps skip videos...
 
 
+def _get_user_engagement(username, driver_index=0, num_posts=10):
+    driver = drivers[driver_index]
+    user_json = _get_user(username, driver)
+    follow_count = user_json['graphql']['user']['edge_followed_by']['count']
+    user_posts = user_json['graphql']['user']['edge_owner_to_timeline_media']['edges']
+    like_counts = [post['node']['edge_liked_by']['count'] for post in user_posts[:num_posts]]
+
+    avg_engagement_rate = sum(like_counts) / (len(like_counts) * follow_count)
+    return avg_engagement_rate, follow_count
+
+
 def _similarity(image, img_link):
-    return random()  # TODO: implement actual similarity with model
+    try:
+        comparison_img_res = requests.get(img_link).content
+        comparison_img = Image.open(io.BytesIO(comparison_img_res))
+
+        similarity_model = model.Model("color-10-128.model")
+        return similarity_model.predict(image, comparison_img)
+    except Exception:
+        if debug: print(f'Unable to get similarity for image: {img_link}')
+        return 0 # don't consider an image that errored

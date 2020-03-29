@@ -3,7 +3,10 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     username: '',
     stage: 1,
-    files: []
+    files: [],
+    rankImagesLoading: false,
+    fileCounter: 0,
+    imagesAreRanked: false
 }
 
 export default function searchReducer(state = initialState, action) {
@@ -19,14 +22,41 @@ export default function searchReducer(state = initialState, action) {
                 stage: action.stage
             }
         case actionTypes.ADD_FILE:
+
+            const newFile = {...action.file}
+            newFile.id = state.fileCounter;
             return {
                 ...state,
-                files: [...state.files, action.file]
+                files: [...state.files, newFile],
+                fileCounter: state.fileCounter + 1
             }
         case actionTypes.DELETE_FILE:
             return {
                 ...state,
-                files: state.files.filter(file => file.name !== action.fileName)
+                files: state.files.filter(file => file.id !== action.id)
+            }
+        case actionTypes.RANK_IMAGES_START:
+            return {
+                ...state,
+                rankImagesLoading: true
+            }
+        case actionTypes.RANK_IMAGES_SUCCESS:
+            const rankingIds = action.rankings.map(ranking => ranking.id);
+
+            const newFiles = [...state.files].map(fileObject => {
+                return {
+                    ...fileObject,
+                    score: action.rankings[rankingIds.indexOf(fileObject.id)].score
+                }
+            })
+
+            newFiles.sort((a, b) => b.score - a.score)
+
+            return {
+                ...state,
+                files: newFiles,
+                imagesAreRanked: true,
+                rankImagesLoading: false
             }
         default: 
             return state;

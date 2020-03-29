@@ -1,0 +1,26 @@
+
+
+.ImagesList {
+    width: 90vw;
+    max-width: 500px;
+    margin: auto;
+
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.ImagesList li {
+    /* height: 220px; */
+    /* display: flex;
+    align-items: center; */
+
+    margin: 60px 0;
+    background-color: var(--background-alt);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.ImagesList img {
+    width: 100%;
+    border-radius: 3px;
+}

@@ -4,27 +4,48 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
 // Router
 import { BrowserRouter as Router } from 'react-router-dom'
 
 // Redux
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import searchReducer from './store/reducers/search';
 import thunk from 'redux-thunk';
+
+import searchReducer from './store/reducers/search';
+import hashtagsReducer from './store/reducers/hashtags';
+import themeReducer from './store/reducers/theme';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  search: searchReducer
+  search: searchReducer,
+  hashtags: hashtagsReducer,
+  theme: themeReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
+
+// Material UI
+
+const materialTheme = createMuiTheme({
+    palette: {
+        primary: {
+            500: '#CC00FF'
+        }
+    }
+});
 const app = <Provider store={store}>
   <Router>
     <React.StrictMode>
-      <App />
+      <ThemeProvider theme={materialTheme}>
+        <App />
+      </ThemeProvider>
+      
     </React.StrictMode>
   </Router>
 </Provider>

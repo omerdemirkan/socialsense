@@ -1,22 +1,14 @@
 import React from 'react';
 import classes from './UsernameInput.module.css';
 
+import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMount';
+
 // Material UI
 import Input from '@material-ui/core/Input';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const materialTheme = createMuiTheme({
-    palette: {
-        primary: {
-            500: '#CC00FF'
-        }
-    }
-});
 
 export default function UsernameInput(props) {
     return <div className='fade-in-on-load'>
-        <ThemeProvider theme={materialTheme}>
+        <ScrollUpOnMount/>
 
         <h2 className='page-header'>
             What Is Your Instagram Handle?
@@ -25,9 +17,11 @@ export default function UsernameInput(props) {
         <div className='form-box'>
             <div className={classes.InputWrapper}>
                 <Input type='text'
+                style = {{color: "var(--primary)", fontWeight: "bold"}}
                 value={props.username}
                 onChange={e => props.updateUsername(e.target.value)}
-                className={classes.Input}/>
+                className={classes.Input}
+                autoFocus/>
                 <span className={classes.AtSymbol}>@</span>
             </div>
             
@@ -37,7 +31,6 @@ export default function UsernameInput(props) {
                 Submit
             </button>
         </div>
-        </ThemeProvider>
     </div>
     
 }

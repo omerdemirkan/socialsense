@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 
 
+
 // Router
 import { Route, Switch } from 'react-router-dom';
 
@@ -13,11 +14,14 @@ import Home from './pages/Home/Home';
 // Components
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import { connect } from 'react-redux';
 
-function App() {
-  return <div className="App">
+function App(props) {
+  return <div className={`App ${props.darkMode ? 'dark-mode' : null}`}>
     <Navbar/>
-    <div className='page-wrapper fade-in-on-load'>
+    <div 
+    className='page-wrapper fade-in-on-load'
+    style={{animationDelay: '2.4s', animationDuration: '.6s'}}>
 
       <Switch>
         <Route path='/about' component={About}/>
@@ -31,4 +35,10 @@ function App() {
   </div>
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    darkMode: state.theme.darkMode
+  }
+}
+
+export default connect(mapStateToProps)(App);

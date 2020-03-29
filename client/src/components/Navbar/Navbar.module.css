@@ -1,15 +1,18 @@
 .Navbar {
+    height: 100vh;
+
     width: 100vw;
-    height: 100px;
     position: fixed;
     top: 0;
     left: 0;
-
     display: flex;
     justify-content: center;
     align-items: center;
 
     z-index: 10;
+    background-color: var(--background);
+
+    transition: height .6s ease, background-color .3s ease;
 }
 
 .LogoText {
@@ -17,18 +20,26 @@
     top: 35px;
     left: 10vw;
     font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity .6s ease, top .4s ease;
 }
 
 .LogoIcon {
     font-size: 2rem;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .LogoIcon img {
-    height: 70px;
+    height: 200px;
+    transform: translateY(6px);
+    cursor: pointer;
+    z-index: 12;
 }
 
 .NavList {
+    opacity: 0;
+    transition: opacity .6s ease, top .4s ease;
     list-style: none;
     padding-inline-start: 0;
 

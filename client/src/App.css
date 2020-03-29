@@ -1,3 +1,4 @@
+
 :root {
   --background: rgb(255, 255, 255);
   --background-alt: rgb(248, 248, 248);
@@ -5,6 +6,17 @@
   --accent-alt: rgb(190, 0, 238);
   --primary: #303030;
   --primary-alt: #3f3f3f;
+  --medium: #4d4d4d;
+}
+
+.dark-mode {
+  --background: rgb(37, 37, 37);
+  --background-alt: rgb(49, 49, 49);
+  --accent: #CC00FF;
+  --accent-alt: rgb(190, 0, 238);
+  --primary: #ffffff;
+  --primary-alt: #f1f1f1;
+  --medium: #b9b9b9;
 }
 
 .App {
@@ -12,6 +24,8 @@
   background-color: var(--background);
   color: var(--primary);
   font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
+  transition: background-color .3s ease;
 }
 
 a {
@@ -23,24 +37,39 @@ button {
   outline: none;
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+}
+
+img {
+  border-radius: 3px;
 }
 
 .page-wrapper {
   min-height: calc(100vh - 100px);
   box-sizing: border-box;
   overflow: auto;
+  padding: 10vh 0;
 }
 
 .page-header {
   text-align: center;
-  margin: 10vh 0 4vh;
+  margin: 3vh 0;
   font-weight: 500;
 }
 
 .form-box {
   width: 90vw;
   max-width: 400px;
-  margin: auto;
+  margin: 5vh auto;
+}
+
+.loader-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20vh;
+  text-align: center;
 }
 
 .accented-text {
@@ -73,12 +102,9 @@ button.primary-button:hover {
   background-color: var(--accent-alt);
 }
 
-button.secondary-button:hover {
-  
-}
 
 button.large {
-  padding: 11px 40px;
+  height: 45px;
   font-size: 1.1rem;
 }
 
@@ -91,7 +117,7 @@ button.full-width {
 
 .fade-in-on-load {
   opacity: 0;
-  animation: FadeIn 0.2s ease forwards;
+  animation: FadeIn 0.3s ease forwards;
 }
 
 @keyframes FadeIn {
@@ -102,3 +128,54 @@ button.full-width {
     opacity: 1;
   }
 }
+
+.fade-in {
+  animation: fadeIn ease 10s;
+  -webkit-animation: fadeIn ease 10s;
+  -moz-animation: fadeIn ease 10s;
+  -o-animation: fadeIn ease 10s;
+  -ms-animation: fadeIn ease 10s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+}}
