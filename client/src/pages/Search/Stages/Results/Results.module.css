@@ -12,15 +12,29 @@
 .HashtagList {
     /* text-align: center; */
     list-style: none;
+    padding-inline-start: 0;
 }
 
 .HashtagList li {
     position: relative;
     margin: 5px 0;
+    cursor: pointer;
+    padding: 8px 10px;
+    background-color: var(--background-alt);
+    border-radius: 3px;
 }
 
-.HashtagList li span {
+.ScoreBox {
     position: absolute;
     right: 120%;
     top: 0;
+    width: 100px;
+}
+
+.AtSymbol {
+    
+}
+
+.HashtagList li:hover .AtSymbol {
+    color: var(--accent);
 }

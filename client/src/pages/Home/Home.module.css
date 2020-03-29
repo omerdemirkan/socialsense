@@ -32,4 +32,13 @@
     -moz-animation: fadeIn ease 10s;
     -o-animation: fadeIn ease 10s;
     -ms-animation: fadeIn ease 10s;
-  }
+}
+
+@media (min-width: 1200px) {
+
+    .Bruh h1 {
+        font-size: 10rem;
+        padding: 0 30vw;
+    }
+
+}

@@ -3,6 +3,8 @@ import classes from './Results.module.css';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Hashtag from '../../../../components/Hashtag/Hashtag';
+
 export default function Results(props) {
 
     if (props.loading || props.hashtags.length === 0) {
@@ -26,10 +28,9 @@ export default function Results(props) {
             <ul className={classes.HashtagList}>
                 {props.hashtags.map((hashtag, index) => {
                     return <li>
-                        @{Object.keys(hashtag)[0]}
-                        <span>
-                            Score: {Object.values(hashtag)[0].toFixed(3)}
-                        </span>
+                        <Hashtag
+                        text={Object.keys(hashtag)[0]}
+                        score={Object.values(hashtag)[0].toFixed(3)}/>
                     </li>
                 })}
             </ul>
