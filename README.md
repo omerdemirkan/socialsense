@@ -16,5 +16,6 @@ Using Socialsense, you’ll be able to find the perfect image and hashtags to re
 
 ## Credits
 - [Intrinsic Image Popularity Assessment](https://github.com/dingkeyan93/Intrinsic-Image-Popularity#intrinsic-image-popularity-assessment) by Keyan Ding, Kede Ma, and Shiqi Wang from the City University of Hong Kong.
+
   - popularity_model/model/model-resnet50.pth was taken from here.
 
