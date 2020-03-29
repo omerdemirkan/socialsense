@@ -1,6 +1,9 @@
 .Hashtag {
+    position: relative;
     overflow: hidden;
     padding: 8px 10px;
+    transition: height 0.2s ease;
+    height: 80px;
 }
 
 .Hashtag hr {
@@ -24,4 +27,34 @@
     position: absolute;
     right: 10px;
     bottom: -5px;
+}
+
+.ToggleBox {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 25px;
+    width: 26px;
+}
+
+.ToggleBox div {
+    height: 4px;
+    width: 16px;
+    border-radius: 2rem;
+    background-color: var(--primary);
+    
+    position: absolute;
+    transition: 0.1s ease;
+}
+
+.ToggleSlab1 {
+    left: 0;
+    top: 6px;
+    transform: rotate(45deg);
+}
+
+.ToggleSlab2 {
+    right: 0;
+    top: 6px;
+    transform: rotate(-45deg);
 }

@@ -7,7 +7,7 @@ import Hashtag from '../../../../components/Hashtag/Hashtag';
 
 export default function Results(props) {
 
-    const [inspectedHashtag, setInspectedHashtag] = useState(null);
+    const [inspectedHashtag, setInspectedHashtag] = useState('');
 
     if (props.loading || props.hashtags.length === 0) {
         return <div className='loader-box'>
@@ -36,7 +36,8 @@ export default function Results(props) {
                         text={text}
                         score={score}
                         inspected={text === inspectedHashtag}
-                        onInspect={() => setInspectedHashtag(text)}/>
+                        onInspect={() => setInspectedHashtag(text)}
+                        onCloseInspect={() => setInspectedHashtag('')}/>
                     </li>
                 })}
             </ul>
