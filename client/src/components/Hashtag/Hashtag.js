@@ -8,10 +8,15 @@ export default function Hashtag(props) {
         <p 
         className={classes.Text}
         onClick={!props.inspected ? props.onInspect : props.onCloseInspect}>
-            <span 
-            style={props.inspected ? {color: 'var(--accent)'} : null}
-            >#</span>
-            {props.text}
+            <a 
+            href={`https://www.instagram.com/explore/tags/${props.text}/`}
+            target='_blank'>
+                <span 
+                style={props.inspected ? {color: 'var(--accent)'} : null}
+                >#</span>
+                {props.text}
+            </a>
+            
         </p>
 
         <span className={classes.ToggleBox}
@@ -27,7 +32,7 @@ export default function Hashtag(props) {
         <hr/>
 
         <div className={classes.DataBox}>
-            <span>Score: {props.score}</span>
+            <span>Score: {props.score.toFixed(4)}</span>
 
             <button 
             className='primary-button'
