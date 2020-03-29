@@ -81,7 +81,10 @@ def rank_tags(username, image, total=100, num_starting=30):
         tag_scores[tag] = sum(weighted_diffs) / len(weighted_diffs)
 
     if debug: print(f'Time to rank: {datetime.now() - start}')
-    return tag_scores
+    
+    engagement_rate, follow_count = _get_user_engagement(username)
+    
+    return tag_scores, engagement_rate, follow_count
 
 
 def initialize_drivers():
@@ -138,6 +141,7 @@ def _get_user_tags(username, num_tags=15, driver_index=0):
     driver = drivers[driver_index]
     user_json = _get_user(username, driver)
     user_posts = user_json['graphql']['user']['edge_owner_to_timeline_media']['edges']
+    follow_count = user_json['graphql']['user']['edge_followed_by']['count']
 
     user_tags = set()
     for post in user_posts:
@@ -151,7 +155,6 @@ def _get_user_tags(username, num_tags=15, driver_index=0):
                 return user_tags
 
     return user_tags
-
 
 def _get_user(username, driver):
     driver.get(f'https://www.instagram.com/{username}/?__a=1')
@@ -266,6 +269,17 @@ def _get_engagement_diff(username, post_like_count, driver, num_posts=10):
     avg_engagement_rate = sum(like_counts) / (len(like_counts) * follow_count)
     return post_engagement_rate - avg_engagement_rate
     # TODO: perhaps skip videos...
+
+
+def _get_user_engagement(username, driver_index=0, num_posts=10):
+    driver = drivers[driver_index]
+    user_json = _get_user(username, driver)
+    follow_count = user_json['graphql']['user']['edge_followed_by']['count']
+    user_posts = user_json['graphql']['user']['edge_owner_to_timeline_media']['edges']
+    like_counts = [post['node']['edge_liked_by']['count'] for post in user_posts[:num_posts]]
+
+    avg_engagement_rate = sum(like_counts) / (len(like_counts) * follow_count)
+    return avg_engagement_rate, follow_count
 
 
 def _similarity(image, img_link):

@@ -63,7 +63,7 @@ def rank_hashtags():
     IGData.password = os.environ['IGPASS']
 
     image = Image.open(BytesIO(base64.b64decode(images[id])))
-    tag_scores = IGData.rank_tags(username, image, 24, 8) #TODO: change these vals
+    tag_scores, engagement_rate, follow_count = IGData.rank_tags(username, image, 1, 1) #TODO: change these vals
     res_body = {
         'hashtags': []
     }
@@ -72,7 +72,16 @@ def rank_hashtags():
     res_body['hashtags'].sort(key=lambda d: list(d.values())[0])
     res_body['hashtags'].reverse()
 
+    scores = []
+    for pair in res_body['hashtags'][:30]:
+        scores.append(list(pair.values())[0])
+
+    mean_score = sum(scores) / len(scores)
+    predicted_engagement = (engagement_rate + mean_score) * follow_count
+    res_body['engagement'] = predicted_engagement
+
     res = make_response(jsonify(res_body))
+    print(res_body, flush=True)
     return res
 
 
