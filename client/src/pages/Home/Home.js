@@ -4,11 +4,9 @@ import classes from './Home.module.css';
 
 
 function Home() {
-    return <div>
-        <div className = {classes.TextBox}>
-            <h1>Discover your audience</h1>
-        </div> 
-    </div> 
+    return <div className = {classes.TextBox}>
+        <h1>Discover Your Audience</h1>
+    </div>  
     
 }
 
