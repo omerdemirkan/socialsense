@@ -1,19 +1,21 @@
 import React from 'react';
 import classes from './Hashtag.module.css';
 
-export default function Hashtag({text, score}) {
-    return <div className={classes.Hashtag}>
+export default function Hashtag({text, score, inspected, onInspect}) {
+    return <div 
+    className={classes.Hashtag + ' fade-in-on-load'} 
+    onClick={onInspect}
+    style={!inspected ? {height: '20px'}: null}>
         <p className={classes.Text}>
             <span>@</span>{text}
         </p>
-            <br/>
+            <hr/>
         <div className={classes.DataBox}>
             <span>Score: {score}</span>
 
             <button 
             className='primary-button'
-            style={{float: 'right'}}
-            >Add To Clipboard</button>
+            >Delete</button>
         </div>
     </div>
 }

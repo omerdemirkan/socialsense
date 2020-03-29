@@ -19,7 +19,6 @@
     position: relative;
     margin: 5px 0;
     cursor: pointer;
-    padding: 8px 10px;
     background-color: var(--background-alt);
     border-radius: 3px;
 }

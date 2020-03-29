@@ -38,7 +38,7 @@ app.get('/rank_images', (req, res) => {
         }
         console.log(response);
         res.json(response);
-    }, 2000);
+    }, 500);
     
 })
 
@@ -58,7 +58,7 @@ app.post('/rank_hashtags', (req, res) => {
                 {bigandthiccchunk: Math.random()},
             ].sort((a, b) => b - a)
         });
-    }, 2000);
+    }, 500);
     
 })
 

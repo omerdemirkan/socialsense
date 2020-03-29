@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import classes from './Results.module.css';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -6,6 +6,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Hashtag from '../../../../components/Hashtag/Hashtag';
 
 export default function Results(props) {
+
+    const [inspectedHashtag, setInspectedHashtag] = useState(null);
 
     if (props.loading || props.hashtags.length === 0) {
         return <div className='loader-box'>
@@ -18,19 +20,23 @@ export default function Results(props) {
         </div>
     }
 
-    console.log(props.hashtags);
+    console.log(inspectedHashtag)
     
-    return <div>
+    return <div className=' fade-in-on-load'>
         <div className={classes.Main}>
             <img
             src={props.file.src}
             />
             <ul className={classes.HashtagList}>
                 {props.hashtags.map((hashtag, index) => {
+                    const text = Object.keys(hashtag)[0];
+                    const score = Object.values(hashtag)[0];
                     return <li>
                         <Hashtag
-                        text={Object.keys(hashtag)[0]}
-                        score={Object.values(hashtag)[0].toFixed(3)}/>
+                        text={text}
+                        score={score}
+                        inspected={text === inspectedHashtag}
+                        onInspect={() => setInspectedHashtag(text)}/>
                     </li>
                 })}
             </ul>

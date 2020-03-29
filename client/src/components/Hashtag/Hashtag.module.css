@@ -1,5 +1,10 @@
 .Hashtag {
-    position: hidden;
+    overflow: hidden;
+    padding: 8px 10px;
+}
+
+.Hashtag hr {
+    border-width: .5px;
 }
 
 .Text {
@@ -11,5 +16,12 @@
 }
 
 .DataBox {
-    margin-top: 20px;
+    margin: 20px 0 10px;
+    position: relative;
+}
+
+.DataBox button {
+    position: absolute;
+    right: 10px;
+    bottom: -5px;
 }
