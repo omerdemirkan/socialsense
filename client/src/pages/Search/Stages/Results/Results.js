@@ -56,10 +56,10 @@ export default function Results(props) {
             </ul>
             
             <CopyToClipboard text={
-                '@' + 
+                '#' + 
                 props.hashtags.map(
                 hashtag => Object.keys(hashtag)[0])
-                .join(' @')
+                .join(' #')
             }
             onCopy={() => setCopyToClipboardModal(true)}>
 
