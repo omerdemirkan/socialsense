@@ -16,7 +16,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 
 function App() {
-  return <div className="App">
+  return <div className="App dark-mode">
     <Navbar/>
     <div 
     className='page-wrapper fade-in-on-load'

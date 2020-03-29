@@ -1,8 +1,9 @@
 import React from 'react';
-import './Footer.module.css';
+import classes from './Footer.module.css';
 
 export default function Footer() {
-    return <div>
-    
+    return <div className={classes.Footer}>
+        <h3>Team SocialSense</h3>
+        <p>LA Hacks 2020</p>
     </div>
 }

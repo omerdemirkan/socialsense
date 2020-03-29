@@ -71,7 +71,7 @@ export default function FilesSelection(props) {
 
     return <div className='fade-in-on-load'>
         <h2 className='page-header'>
-            What Pictures Are You Considering?
+            What Images Are You Considering?
         </h2>
 
         <div className='form-box'>
@@ -85,15 +85,7 @@ export default function FilesSelection(props) {
 
             <button
             onClick={() => inputRef.current.click()}
-            className='secondary-button large'
-            style={props.files.length > 0 ? {width: '50%'} : {width: '100%'}}>Choose File</button>
-
-            {props.files.length > 0 ?
-                <button
-                className='primary-button large fade-in-on-load'
-                style={{width: '50%'}}
-                onClick={rankButtonClickedHandler}>Rank Images</button>
-            : null}
+            className='secondary-button large full-width'>Choose File</button>
 
             <ul className={classes.FileNameList}>
                 {props.files.map(file => {
@@ -104,6 +96,12 @@ export default function FilesSelection(props) {
                     </li>
                 })}
             </ul>
+
+            {props.files.length > 0 ?
+                <button
+                className='primary-button large full-width fade-in-on-load'
+                onClick={rankButtonClickedHandler}>Submit</button>
+            : null}
         </div>
         
     </div>

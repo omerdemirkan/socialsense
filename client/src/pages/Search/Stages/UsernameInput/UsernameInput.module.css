@@ -27,10 +27,14 @@
 }
 
 .AtSymbol {
+    
+}
+
+.AtSymbol {
     position: absolute;
     top: 6px;
     left: 10px;
     font-size: 1.4rem;
 
-    transition: color 1.5s ease;
+    transition: color .2s ease;
 }

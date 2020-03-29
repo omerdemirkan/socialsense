@@ -11,7 +11,6 @@ export default function ImageSelection(props) {
         </div>
     }
 
-
     let delay = 0;
     return <div className={classes.ImageSelection + ' fade-in-on-load'}>
         <h2 className='page-header'>Ranked from highest to lowest expected engagement</h2>

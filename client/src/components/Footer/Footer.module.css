@@ -1,0 +1,13 @@
+
+
+.Footer {
+    height: 110px;
+    width: 100vw;
+    background-color: var(--background-alt);
+    padding-top: 10px;
+    text-align: center;
+}
+
+.Footer h3 {
+    margin: 1rem 0;
+}

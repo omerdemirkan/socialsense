@@ -10,7 +10,7 @@ export default function Hashtag(props) {
         onClick={!props.inspected ? props.onInspect : props.onCloseInspect}>
             <span 
             style={props.inspected ? {color: 'var(--accent)'} : null}
-            >@</span>
+            >#</span>
             {props.text}
         </p>
 

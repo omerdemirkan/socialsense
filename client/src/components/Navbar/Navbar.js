@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import classes from './Navbar.module.css';
 
 //Router
@@ -6,22 +6,55 @@ import { NavLink } from 'react-router-dom';
 
 // Images
 import logo from '../../images/logo.svg';
+import logo2 from '../../images/logo-2.svg';
 
 
 export default function Navbar() {
     
-    const [minimize, setMinimize] = useState(false);
+    const [splashScreenClosed, setSplashScreenClosed] = useState(false);
+
+    const [minimizeHeader, setMinimizeHeader] = useState(false);
+
+    const headerRef = useRef();
+    headerRef.current = minimizeHeader;
+
+    useEffect(() => {
+        const handleScroll = () => {
+          const show = window.scrollY > 50
+          if (headerRef.current !== show) {
+            setMinimizeHeader(show)
+          }
+        }
+        document.addEventListener('scroll', handleScroll)
+        return () => {
+          document.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
 
     useEffect(() => {
         setTimeout(() => {
-            setMinimize(true)
+            setSplashScreenClosed(true)
         }, 2000);
-    });
+    }, []);
     
-    return <div className={classes.Navbar + ' fade-in-on-load'} style={minimize ? {height: '100px'}: null}>
+    return <div className={classes.Navbar + ' fade-in-on-load'} 
+    style={splashScreenClosed ? 
+        
+        minimizeHeader ? 
+
+            {height: '80px', backgroundColor: 'var(--background-alt)'} 
+
+        : {height: '100px'}
+    : 
+        null
+    }>
+        
         <span 
         className={classes.LogoText}
-        style={minimize ? {opacity: 1}: null}>
+        style={splashScreenClosed ? 
+         minimizeHeader ? {opacity: 1, top: '22px'}
+         : {opacity: 1}
+        : null}>
             <NavLink to='/'>
                 socialsense.<span className='accented-text'>ai</span>
             </NavLink>
@@ -30,15 +63,20 @@ export default function Navbar() {
         <span className={classes.LogoIcon}>
             <NavLink to='/'>
                 <img 
-                src={logo}
-                style={minimize ? {height: '70px', transition: 'height 0.2s ease'}: null}
+                src={logo2}
+                style={splashScreenClosed ? {height: '70px', transition: 'height 0.2s ease'}: null}
                 />
             </NavLink>
         </span>
 
         <ul 
         className={classes.NavList}
-        style={minimize ? {opacity: 1}: null}>
+        style={
+            splashScreenClosed ? 
+                minimizeHeader ? {opacity: 1, top: '15px'}
+                : {opacity: 1}
+            : null}
+        >
             <li>
                 <NavLink to='/' 
                 activeClassName={classes.ActiveLink}
