@@ -6,6 +6,7 @@ import ScrollUpOnMount from '../../../../components/ScrollUpOnMount/ScrollUpOnMo
 import CircularProgress from '@material-ui/core/CircularProgress';
 import loadingGif from '../../../../images/gifs/loading.gif'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 
 import Hashtag from '../../../../components/Hashtag/Hashtag';
 
@@ -41,6 +42,14 @@ export default function Results(props) {
     }
 
     let delay = 0.2;
+
+    console.log(props.engagement);
+
+    // const expectedEngagement = Math.floor(props.engagement * props.hashtags
+    // .map(hashtagObject => Object.values(hashtagObject)[0])
+    // .reduce((total, current) => total + current));
+
+    // console.log(expectedEngagement);
     
     return <div className=' fade-in-on-load'>
         <ScrollUpOnMount/>
@@ -65,6 +74,13 @@ export default function Results(props) {
             src={props.file.src}
             className={classes.Image}
             />
+
+            <div className={classes.EngagementBox}>
+                <FavoriteRoundedIcon fontSize='large'/>
+                <span>
+                    <span className='accented-text' style={{fontSize: '1.1rem', fontWeight: '700'}}>{props.engagement}</span> (Expected Engagement)
+                </span>
+            </div>
 
             <ul className={classes.HashtagList}>
                 {props.hashtags.map((hashtag, index) => {

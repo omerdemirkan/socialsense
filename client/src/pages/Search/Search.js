@@ -81,6 +81,7 @@ function Search(props) {
             setHashtags={props.onSetHashtags}
             profileImageSrc={props.profileImageSrc}
             handle={props.username}
+            engagement={props.engagement}
             />
     }
 
@@ -105,7 +106,8 @@ const mapStateToProps = state => {
         hashtagsLoading: state.hashtags.loading,
         hashtags: state.hashtags.hashtags,
         hashtagFile: state.hashtags.file,
-        profileImageSrc: state.hashtags.profileImageSrc
+        profileImageSrc: state.hashtags.profileImageSrc,
+        engagement: state.hashtags.engagement
     }
 }
 
@@ -121,10 +123,8 @@ const mapDispatchToProps = dispatch => {
             // console.log(hashtags)
             dispatch(setHashtags(hashtags))
         },
-        onSetProfileImageSrc: src => {
-            console.log(src);
-            dispatch(setProfileImageSrc(src))
-        }
+        onSetProfileImageSrc: src => dispatch(setProfileImageSrc(src)),
+        
     }
 }
 

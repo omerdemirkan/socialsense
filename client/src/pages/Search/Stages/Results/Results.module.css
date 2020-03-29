@@ -68,3 +68,18 @@
     top: 20px;
     left: 70px;
 }
+
+.EngagementBox {
+    display: flex;
+    align-items: center;
+}
+
+.EngagementBox span {
+    
+}
+
+.EngagementBox svg {
+    margin: 0 10px;
+    color: var(--accent)
+    /* transform: translateY(5px); */
+}

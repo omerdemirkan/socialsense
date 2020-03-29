@@ -47,6 +47,7 @@ app.post('/rank_hashtags', (req, res) => {
 
     setTimeout(() => {
         res.json({
+            engagement: Math.floor(Math.random() * 1000),
             hashtags: [
                 {thicc: Math.random()},
                 {chunk: Math.random()},

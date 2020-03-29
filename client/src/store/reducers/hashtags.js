@@ -4,7 +4,8 @@ const initialState = {
     hashtags: [],
     file: null,
     loading: false,
-    profileImageSrc: null
+    profileImageSrc: null,
+    engagement: null
 }
 
 export default function(state = initialState, action) {
@@ -19,7 +20,8 @@ export default function(state = initialState, action) {
                 ...state,
                 file: action.file,
                 loading: false,
-                hashtags: action.hashtags
+                hashtags: action.hashtags,
+                engagement: action.engagement
             }
         case actionTypes.SET_HASHTAGS:
             return {
@@ -31,7 +33,7 @@ export default function(state = initialState, action) {
                 ...state,
                 profileImageSrc: action.src
             }
-
+            
         default:
             return state
     }

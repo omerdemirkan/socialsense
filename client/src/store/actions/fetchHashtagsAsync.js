@@ -10,7 +10,7 @@ export default function fetchHashtagsAsync(username, file) {
             username
         })
         .then(res => {
-            dispatch(fetchHashtagsSuccess(file, res.data.hashtags))
+            dispatch(fetchHashtagsSuccess(file, res.data.hashtags, res.data.engagement))
         })
         .catch();
     }
@@ -20,11 +20,12 @@ function fetchHashtagsStart() {
     return {type: actionTypes.FETCH_HASHTAGS_START}
 }
 
-function fetchHashtagsSuccess(file, hashtags) {
+function fetchHashtagsSuccess(file, hashtags, engagement) {
     return {
         type: actionTypes.FETCH_HASHTAGS_SUCCESS, 
         file, 
-        hashtags
+        hashtags,
+        engagement
     }
 
 }
