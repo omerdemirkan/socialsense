@@ -4,7 +4,7 @@ import os
 import io
 import traceback
 import requests
-from random import random
+from random import shuffle
 from collections import deque
 from multiprocessing import Pool
 from model import model
@@ -23,7 +23,7 @@ drivers = []
 
 top_100_tags = ['love', 'instagood', 'photooftheday', 'fashion', 'Beautiful', 'like4like', 'picoftheday', 'art', 'happy', 'photography', 'instagram', 'followme', 'style', 'follow', 'instadaily', 'travel', 'life', 'cute', 'fitness', 'nature', 'beauty', 'girl', 'fun', 'photo', 'amazing', 'likeforlike', 'instalike', 'Selfie', 'smile', 'me', 'lifestyle', 'model', 'follow4follow', 'music', 'friends', 'motivation', 'like', 'food', 'inspiration', 'Repost', 'summer', 'design', 'makeup', 'TBT', 'followforfollow', 'ootd', 'Family', 'l4l', 'cool', 'igers', 'TagsForLikes', 'hair', 'instamood', 'sun', 'vsco', 'fit', 'beach', 'photographer', 'gym', 'artist', 'girls', 'vscocam', 'autumn', 'pretty', 'luxury', 'instapic', 'black', 'sunset', 'funny', 'sky', 'blogger', 'hot', 'healthy', 'work', 'bestoftheday', 'workout', 'f4f', 'nofilter', 'london', 'goals', 'blackandwhite', 'blue', 'swag', 'health', 'party', 'night', 'landscape', 'nyc', 'happiness', 'pink', 'lol', 'foodporn', 'newyork', 'fitfam', 'awesome', 'fashionblogger', 'Halloween', 'Home', 'fall', 'paris']
 """top 100 hashtags from https://www.all-hashtag.com/top-hashtags.php, used as a starting point
-for create_dataset
+for create_dataset and when user has no previous hashtags
 """
 
 def create_dataset(total=100, output_path='dataset.json'):
@@ -56,8 +56,9 @@ def rank_tags(username, image, total=100, num_starting=30):
 
     starting_tags = _get_user_tags(username, num_starting)
     if len(starting_tags) == 0:
+        shuffle(top_100_tags)
         starting_tags = top_100_tags[:num_starting]
-        
+
     seen_tags = _scrape(starting_tags, _scrape_post_engagement, total)
 
     print('Scoring hashtags')
