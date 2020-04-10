@@ -4,7 +4,7 @@
 
 ### Use machine learning to find the perfect image and hashtags to reach a broader audience.
 
-*[Submission for LAHacks 2020](https://devpost.com/software/socialsense-ai)*
+*[Winner of "Best Hack Using Machine Learning" at LAHacks 2020](https://devpost.com/software/socialsense-ai)*
 
 ## Inspiration
 
