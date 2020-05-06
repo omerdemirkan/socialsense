@@ -4,7 +4,9 @@
 
 ### Use machine learning to find the perfect image and hashtags to reach a broader audience.
 
-*[Winner of "Best Hack Using Machine Learning" at LAHacks 2020](https://devpost.com/software/socialsense-ai)*
+*[Winner of "Best Hack Using Machine Learning" at LAHacks 2020.](https://devpost.com/software/socialsense-ai)*
+
+**Built in 36 hours.**
 
 ## Inspiration
 
@@ -13,6 +15,12 @@ Hashtags are powerful. When used correctly on a platform like Instagram, they ca
 ## What It Does
 
 Using Socialsense, you’ll be able to find the perfect image and hashtags to reach the right people. First, input your Instagram handle, select the images you consider posting, and submit. Socialsense will predict which images will attract the most attention. The user can then choose an image to post, and socialsense will find the most optimal hashtags to use, in addition to estimating how much engagement the post will receive with these hashtags.
+
+## Demo
+
+<p align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zVT3j0gtMA4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
 
 ## Credits
 - [Intrinsic Image Popularity Assessment](https://github.com/dingkeyan93/Intrinsic-Image-Popularity#intrinsic-image-popularity-assessment) by Keyan Ding, Kede Ma, and Shiqi Wang from the City University of Hong Kong.
