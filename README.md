@@ -1,5 +1,5 @@
 <p align="center">
-<img src="assets/logo.png" title="Logo">
+  <img src="assets/logo.png" title="Logo">
 </p>
 
 ### Use machine learning to find the perfect image and hashtags to reach a broader audience.
@@ -19,8 +19,12 @@ Using Socialsense, you’ll be able to find the perfect image and hashtags to re
 ## Demo
 
 <p align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zVT3j0gtMA4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <a href="https://www.youtube.com/watch?v=zVT3j0gtMA4">
+    <img alt="Video" src="http://img.youtube.com/vi/zVT3j0gtMA4/0.jpg">
+  </a>
 </p>
+
+[YouTube Link](https://www.youtube.com/watch?v=zVT3j0gtMA4)
 
 ## Credits
 - [Intrinsic Image Popularity Assessment](https://github.com/dingkeyan93/Intrinsic-Image-Popularity#intrinsic-image-popularity-assessment) by Keyan Ding, Kede Ma, and Shiqi Wang from the City University of Hong Kong.
